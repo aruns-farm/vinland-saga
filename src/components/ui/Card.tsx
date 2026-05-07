@@ -1,47 +1,53 @@
 import { type ReactNode } from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/cn"
 
-interface CardProps {
-  children: ReactNode
-  variant?: "solid" | "dashed" | "photo"
-  hover?: boolean
+const card = cva("shadow-lg", {
+  variants: {
+    variant: {
+      solid:  "bg-wool  border-[2.5px] border-ink  rounded-card",
+      dashed: "bg-cream border-[2.5px] border-dashed border-ink rounded-card",
+      photo:  "bg-cream border-[2.5px] border-ink  rounded-card-lg overflow-hidden",
+    },
+    hover: {
+      true:  "card-hover",
+      false: "",
+    },
+  },
+  defaultVariants: {
+    variant: "solid",
+    hover: false,
+  },
+})
+
+type CardVariantProps = VariantProps<typeof card>
+export type CardVariant = NonNullable<CardVariantProps["variant"]>
+
+interface CardProps extends CardVariantProps {
+  children:   ReactNode
   className?: string
 }
 
-const variantClasses = {
-  solid:  "bg-wool border-[2.5px] border-ink rounded-[18px]",
-  dashed: "bg-cream border-[2.5px] border-dashed border-ink rounded-[18px]",
-  photo:  "bg-cream border-[2.5px] border-ink rounded-[20px] overflow-hidden",
-}
-
-export function Card({ children, variant = "solid", hover = false, className = "" }: CardProps) {
+export function Card({ children, variant, hover, className }: CardProps) {
   return (
-    <div
-      className={`
-        ${variantClasses[variant]}
-        ${hover ? "card-hover" : ""}
-        ${className}
-      `}
-      style={{ boxShadow: "0 6px 0 rgba(0,0,0,.15)" }}
-    >
+    <div className={cn(card({ variant, hover }), className)}>
       {children}
     </div>
   )
 }
 
 interface PhotoCardProps {
-  accentBg: string
-  children: ReactNode
+  accentBg:   string
+  children:   ReactNode
   className?: string
-  hover?: boolean
+  hover?:     boolean
 }
 
-export function PhotoCard({ accentBg, children, className = "", hover = false }: PhotoCardProps) {
+export function PhotoCard({ accentBg, children, className, hover = false }: PhotoCardProps) {
   return (
     <Card variant="photo" hover={hover} className={className}>
-      <div
-        className="aspect-video border-b-[2.5px] border-ink"
-        style={{ background: accentBg }}
-      />
+      {/* accentBg is a data-driven JS variable — inline style is correct here */}
+      <div className="aspect-video border-b-[2.5px] border-ink" style={{ background: accentBg }} />
       <div className="p-4">{children}</div>
     </Card>
   )

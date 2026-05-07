@@ -31,8 +31,7 @@ export function UnderConstruction() {
           className="flex-shrink-0 relative w-[90px] h-[90px]"
           style={{
             transform: "rotate(-6deg)",
-            animation: show ? "ucWiggle 2.4s ease-in-out infinite" : undefined,
-            animationDelay: ".55s",
+            animation: show ? "ucWiggle 2.4s ease-in-out .55s infinite" : undefined,
           }}
           aria-hidden="true"
         >

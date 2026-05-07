@@ -13,7 +13,7 @@ export function Contact({ config }: { config: PortfolioConfig }) {
       className="py-16 px-7 bg-sun"
       style={{ borderTop: "3px solid var(--ink)", borderBottom: "3px solid var(--ink)" }}
     >
-      <div className="max-w-[1280px] mx-auto grid gap-10 items-center" style={{ gridTemplateColumns: "1.2fr 1fr" }}>
+      <div className="max-w-[1280px] mx-auto grid gap-10 items-center grid-cols-1 md:grid-cols-[1.2fr_1fr]">
         <div>
           <span className="font-hand text-[30px] -rotate-2 inline-block">
             ~ let&apos;s talk ~

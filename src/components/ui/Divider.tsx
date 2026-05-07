@@ -1,15 +1,40 @@
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/cn"
+
+export type DividerVariant = "dashed" | "ink" | "dots" | "wavy"
+
+const hrDivider = cva("border-0 my-5", {
+  variants: {
+    variant: {
+      dashed: "[border-top:2px_dashed_var(--rule)]",
+      ink:    "[border-top:var(--b-thick)]",
+    },
+  },
+  defaultVariants: { variant: "dashed" },
+})
+
 interface DividerProps {
-  variant?: "dashed" | "ink" | "dots"
+  variant?:   DividerVariant
   className?: string
 }
 
-export function Divider({ variant = "dashed", className = "" }: DividerProps) {
-  if (variant === "dots") {
+export function Divider({ variant = "dashed", className }: DividerProps) {
+  if (variant === "wavy") {
     return (
       <div
-        className={`flex items-center justify-center gap-3 py-3 ${className}`}
+        className={cn("h-[14px] my-2", className)}
         aria-hidden="true"
-      >
+        style={{
+          background: "radial-gradient(circle at 7px 14px, var(--sun) 7px, transparent 8px) repeat-x",
+          backgroundSize: "14px 14px",
+        }}
+      />
+    )
+  }
+
+  if (variant === "dots") {
+    return (
+      <div className={cn("flex items-center justify-center gap-3 py-3", className)} aria-hidden="true">
         {[...Array(7)].map((_, i) => (
           <span
             key={i}
@@ -22,13 +47,6 @@ export function Divider({ variant = "dashed", className = "" }: DividerProps) {
   }
 
   return (
-    <hr
-      className={`border-0 my-5 ${className}`}
-      style={{
-        borderTop: variant === "ink"
-          ? "3px solid var(--ink)"
-          : "2px dashed color-mix(in oklab, var(--ink) 18%, transparent)",
-      }}
-    />
+    <hr className={cn(hrDivider({ variant: variant as "dashed" | "ink" }), className)} />
   )
 }

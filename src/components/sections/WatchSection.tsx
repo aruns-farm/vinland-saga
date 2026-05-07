@@ -12,21 +12,19 @@ function FeaturedTalkCard({ talk }: { talk: Talk }) {
   return (
     <Link href="/watch" className="block no-underline group">
       <article
-        className="card-hover-straight rounded-[24px] border-[2.5px] border-ink overflow-hidden"
-        style={{ background: "var(--wool)", boxShadow: "0 8px 0 var(--wool-shadow)" }}
+        className="card-hover-straight rounded-[24px] border-[2.5px] border-ink overflow-hidden bg-wool shadow-xl"
       >
         {/* Thumbnail */}
         <div
-          className="relative border-b-[2.5px] border-ink"
-          style={{ aspectRatio: "16/9", background: gradients[0] }}
+          className="relative border-b-[2.5px] border-ink aspect-video"
+          style={{ background: gradients[0] }}
         >
           <span className="absolute top-3 left-3 bg-white text-ink border-2 border-ink rounded-[6px] px-2 py-0.5 text-[11px] font-black inline-flex items-center gap-1.5">
             <span className="inline-block w-[14px] h-[10px] rounded-[2px] bg-barn" />
             YouTube
           </span>
           <div
-            className="yt-play-mini absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-barn border-[3px] border-ink flex items-center justify-center"
-            style={{ boxShadow: "0 6px 0 var(--ink)" }}
+            className="yt-play-mini absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-barn border-[3px] border-ink flex items-center justify-center shadow-ink"
           />
           <span className="absolute bottom-3 right-3 bg-ink text-white text-[13px] font-black px-2.5 py-1 rounded">
             {talk.duration}
@@ -62,16 +60,14 @@ function TalkCard({ talk, nth }: { talk: Talk; nth: number }) {
   return (
     <Link href="/watch" className="block no-underline group">
       <article
-        className="card-hover rounded-[20px] border-[2.5px] border-ink overflow-hidden"
-        style={{ background: "var(--wool)", boxShadow: "0 6px 0 var(--wool-shadow)" }}
+        className="card-hover rounded-[20px] border-[2.5px] border-ink overflow-hidden bg-wool shadow-lg"
       >
         <div
-          className="relative border-b-[2.5px] border-ink"
-          style={{ aspectRatio: "16/9", background: gradients[(nth + 1) % gradients.length] }}
+          className="relative border-b-[2.5px] border-ink aspect-video"
+          style={{ background: gradients[(nth + 1) % gradients.length] }}
         >
           <div
-            className="yt-play-mini absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-barn border-[2.5px] border-ink flex items-center justify-center"
-            style={{ boxShadow: "0 4px 0 var(--ink)" }}
+            className="yt-play-mini absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-barn border-[2.5px] border-ink flex items-center justify-center shadow-ink"
           />
           <span className="absolute bottom-2 right-2 bg-ink text-white text-[11px] font-black px-2 py-0.5 rounded">
             {talk.duration}
@@ -99,8 +95,8 @@ export function WatchSection({ talks }: { talks: Talk[] }) {
   return (
     <section
       id="watch"
+      className="bg-cream2"
       style={{
-        background: "var(--cream-2)",
         borderTop: "3px solid var(--ink)",
         borderBottom: "3px solid var(--ink)",
         padding: "80px 28px",
@@ -124,14 +120,13 @@ export function WatchSection({ talks }: { talks: Talk[] }) {
           </div>
           <Link
             href="/watch"
-            className="inline-flex items-center gap-2 bg-white text-ink border-[2.5px] border-ink rounded-full px-[18px] py-2 font-black text-[14px] no-underline hover:bg-cream2 transition-colors"
-            style={{ boxShadow: "0 3px 0 var(--wool-shadow)" }}
+            className="inline-flex items-center gap-2 bg-white text-ink border-[2.5px] border-ink rounded-full px-[18px] py-2 font-black text-[14px] no-underline hover:bg-cream2 transition-colors shadow-sm"
           >
             View all episodes →
           </Link>
         </div>
 
-        <div className="grid gap-6" style={{ gridTemplateColumns: "2fr 1fr 1fr" }}>
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-[2fr_1fr_1fr]">
           <FeaturedTalkCard talk={featured} />
           {others.map((t, i) => (
             <TalkCard key={t.id} talk={t} nth={i} />
@@ -140,8 +135,7 @@ export function WatchSection({ talks }: { talks: Talk[] }) {
           {Array.from({ length: Math.max(0, 2 - others.length) }).map((_, i) => (
             <div
               key={`pad-${i}`}
-              className="rounded-[20px] border-[2.5px] border-dashed border-ink opacity-30"
-              style={{ aspectRatio: "16/9", background: "var(--cream)" }}
+              className="rounded-[20px] border-[2.5px] border-dashed border-ink opacity-30 aspect-video bg-cream"
             />
           ))}
         </div>

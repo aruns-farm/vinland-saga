@@ -45,17 +45,16 @@ export default function BlogListPage() {
               className="block no-underline"
             >
               <article
-                className="px-7 py-9 max-w-[860px] mx-auto flex gap-8 items-start group"
+                className="px-7 py-8 max-w-[860px] mx-auto flex gap-5 sm:gap-8 items-start group"
                 style={{
                   borderBottom: i < posts.length - 1 ? "2px dashed color-mix(in oklab, var(--ink) 18%, transparent)" : undefined,
                 }}
               >
                 {/* Gradient swatch */}
                 <div
-                  className="flex-shrink-0 w-[80px] h-[80px] rounded-[14px] border-[2px] border-ink"
+                  className="flex-shrink-0 w-[56px] h-[56px] sm:w-[80px] sm:h-[80px] rounded-[14px] border-[2px] border-ink shadow-md"
                   style={{
                     background: post.accentGradient,
-                    boxShadow: "0 4px 0 var(--wool-shadow)",
                   }}
                 />
 

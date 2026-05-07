@@ -4,8 +4,7 @@ import { StickerTag, Eyebrow } from "@/components/ui/Tag"
 function ProjectCard({ project }: { project: Project }) {
   return (
     <div
-      className="card-hover relative rounded-3xl border-[2.5px] border-ink p-5 text-center overflow-hidden bg-wool"
-      style={{ boxShadow: "0 6px 0 var(--wool-shadow)" }}
+      className="card-hover relative rounded-3xl border-[2.5px] border-ink p-5 text-center overflow-hidden bg-wool shadow-lg"
     >
       <StickerTag>{project.tag}</StickerTag>
 
@@ -73,7 +72,7 @@ export function Projects({ projects }: { projects: Project[] }) {
         </a>
       </div>
 
-      <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map(p => <ProjectCard key={p.id} project={p} />)}
       </div>
     </section>

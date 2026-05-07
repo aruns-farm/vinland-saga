@@ -101,12 +101,11 @@ function Section({ s }: { s: BlogSection }) {
 
   if (s.type === "callout") return (
     <div
-      className="my-9 rounded-[20px] border-[3px] border-dashed border-ink p-6 grid gap-[18px] items-start"
-      style={{ background: "var(--cream-2)", gridTemplateColumns: "56px 1fr" }}
+      className="my-9 rounded-[20px] border-[3px] border-dashed border-ink p-6 grid gap-[18px] items-start bg-cream2"
+      style={{ gridTemplateColumns: "56px 1fr" }}
     >
       <div
-        className="w-14 h-14 rounded-[14px] border-[2.5px] border-ink flex items-center justify-center text-[30px]"
-        style={{ background: "var(--sun)", boxShadow: "0 3px 0 var(--sun-2)" }}
+        className="w-14 h-14 rounded-[14px] border-[2.5px] border-ink flex items-center justify-center text-[30px] bg-sun shadow-sun"
       >
         {s.icon}
       </div>
@@ -119,8 +118,7 @@ function Section({ s }: { s: BlogSection }) {
 
   if (s.type === "code") return (
     <pre
-      className="my-6 p-5 rounded-[14px] border-[2px] border-ink overflow-x-auto text-[14px] font-mono leading-relaxed text-cream"
-      style={{ background: "var(--ink)" }}
+      className="my-6 p-5 rounded-[14px] border-[2px] border-ink overflow-x-auto text-[14px] font-mono leading-relaxed text-cream bg-ink"
     >
       <code>{s.text}</code>
     </pre>
@@ -144,8 +142,7 @@ function Section({ s }: { s: BlogSection }) {
 /* ── Sidebar cards ── */
 function TocCard({ toc }: { toc: TocEntry[] }) {
   return (
-    <div className="bg-white border-[2.5px] border-ink rounded-[18px] p-[22px]"
-      style={{ boxShadow: "0 4px 0 var(--wool-shadow)" }}>
+    <div className="bg-white border-[2.5px] border-ink rounded-[18px] p-[22px] shadow-md">
       <span className="font-hand text-[19px] text-barn block mb-[-2px]">~ in this story ~</span>
       <h4 className="font-display text-[18px] text-ink mb-[14px]">Contents</h4>
       <ol className="list-none p-0 m-0" style={{ counterReset: "tocnum" }}>
@@ -175,11 +172,10 @@ function TocCard({ toc }: { toc: TocEntry[] }) {
 function AuthorCard() {
   const initials = config.name.split(" ").map(w => w[0]).join("").slice(0, 2)
   return (
-    <div className="border-[2.5px] border-ink rounded-[18px] p-[22px] text-center"
-      style={{ background: "var(--paper, #fffaec)", boxShadow: "0 4px 0 var(--wool-shadow)" }}>
+    <div className="border-[2.5px] border-ink rounded-[18px] p-[22px] text-center shadow-md"
+      style={{ background: "var(--paper, #fffaec)" }}>
       <div
-        className="w-20 h-20 rounded-full border-[3px] border-ink mx-auto mb-3 flex items-center justify-center font-display font-black text-[32px] text-ink bg-sun"
-        style={{ boxShadow: "0 3px 0 var(--sun-2)" }}
+        className="w-20 h-20 rounded-full border-[3px] border-ink mx-auto mb-3 flex items-center justify-center font-display font-black text-[32px] text-ink bg-sun shadow-sun"
       >
         {initials}
       </div>
@@ -199,8 +195,7 @@ function AuthorCard() {
 
 function NewsletterCard() {
   return (
-    <div className="bg-ink border-[2.5px] border-ink rounded-[18px] p-[22px]"
-      style={{ boxShadow: "0 4px 0 var(--wool-shadow)" }}>
+    <div className="bg-ink border-[2.5px] border-ink rounded-[18px] p-[22px] shadow-md">
       <span className="font-hand text-[19px] text-sun block mb-[-2px]">~ The Hilltop Post ~</span>
       <h4 className="font-display text-[18px] text-cream mb-2">Field Notes, monthly.</h4>
       <p className="text-[13px] leading-[1.5] mb-[14px]" style={{ color: "color-mix(in oklab, var(--cream) 80%, transparent)" }}>
@@ -212,8 +207,7 @@ function NewsletterCard() {
         style={{ background: "transparent", borderColor: "var(--cream)" }}
       />
       <button
-        className="w-full py-[10px] rounded-full bg-sun text-ink border-2 border-ink font-black text-[14px] cursor-pointer"
-        style={{ boxShadow: "0 3px 0 var(--sun-2)" }}
+        className="w-full py-[10px] rounded-full bg-sun text-ink border-2 border-ink font-black text-[14px] cursor-pointer shadow-sun"
       >
         Join the flock
       </button>
@@ -307,8 +301,8 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* Byline pill */}
           <div
-            className="mt-9 inline-flex items-center gap-[14px] bg-white border-[2.5px] border-ink rounded-full"
-            style={{ padding: "8px 20px 8px 8px", boxShadow: "0 3px 0 var(--wool-shadow)" }}
+            className="mt-9 inline-flex items-center gap-[14px] bg-white border-[2.5px] border-ink rounded-full shadow-sm"
+            style={{ padding: "8px 20px 8px 8px" }}
           >
             <div
               className="w-11 h-11 rounded-full bg-sun border-2 border-ink flex items-center justify-center font-display font-black text-[20px] text-ink flex-shrink-0"
@@ -397,12 +391,11 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* ── Body + sidebar ── */}
         <div
+          className="grid grid-cols-1 lg:grid-cols-[1fr_280px]"
           style={{
             maxWidth: 1100,
             margin: "0 auto",
             padding: "0 28px 80px",
-            display: "grid",
-            gridTemplateColumns: "1fr 280px",
             gap: 56,
             alignItems: "start",
           }}
@@ -410,7 +403,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Article body — padding-left creates margin for absolute .num circles */}
           <article
             className="text-ink max-w-[720px]"
-            style={{ fontSize: 19, lineHeight: 1.7, paddingLeft: 56, position: "relative" }}
+            style={{ fontSize: 19, lineHeight: 1.7, paddingLeft: "clamp(0px, 4vw, 56px)", position: "relative" }}
           >
             {post.content.map((s, i) => <Section key={i} s={s} />)}
 
@@ -427,8 +420,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <Link
                     key={t.id}
                     href={`#${t.id}`}
-                    className="bg-white border-2 border-ink rounded-full px-[14px] py-1.5 text-[13px] font-bold text-ink no-underline hover:bg-sun transition-colors"
-                    style={{ boxShadow: "0 2px 0 var(--wool-shadow)" }}
+                    className="bg-white border-2 border-ink rounded-full px-[14px] py-1.5 text-[13px] font-bold text-ink no-underline hover:bg-sun transition-colors shadow-xs"
                   >
                     #{t.id}
                   </Link>
@@ -439,8 +431,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {["⎘", "✉", "𝕏", "📌"].map(icon => (
                   <button
                     key={icon}
-                    className="w-10 h-10 border-[2.5px] border-ink rounded-full bg-white font-black text-[16px] cursor-pointer hover:bg-sun hover:-translate-y-0.5 transition-all"
-                    style={{ boxShadow: "0 3px 0 var(--wool-shadow)" }}
+                    className="w-10 h-10 border-[2.5px] border-ink rounded-full bg-white font-black text-[16px] cursor-pointer hover:bg-sun hover:-translate-y-0.5 transition-all shadow-sm"
                   >
                     {icon}
                   </button>
@@ -450,7 +441,7 @@ export default async function BlogPostPage({ params }: Props) {
           </article>
 
           {/* Sidebar */}
-          <aside style={{ position: "sticky", top: 90, display: "flex", flexDirection: "column", gap: 22 }}>
+          <aside className="flex flex-col gap-[22px] lg:sticky lg:top-[90px]">
             <TocCard toc={post.toc} />
             <AuthorCard />
             <NewsletterCard />
@@ -473,13 +464,12 @@ export default async function BlogPostPage({ params }: Props) {
                 </div>
                 <Link
                   href="/blog"
-                  className="bg-white border-2 border-ink rounded-full px-[18px] py-2 font-black text-[14px] text-ink no-underline hover:bg-cream2 transition-colors"
-                  style={{ boxShadow: "0 3px 0 var(--wool-shadow)" }}
+                  className="bg-white border-2 border-ink rounded-full px-[18px] py-2 font-black text-[14px] text-ink no-underline hover:bg-cream2 transition-colors shadow-sm"
                 >
                   All stories →
                 </Link>
               </div>
-              <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {morePosts.map(p => <MoreCard key={p.slug} post={p} />)}
               </div>
             </div>

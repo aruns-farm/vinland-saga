@@ -107,19 +107,19 @@ export default function WatchClient({ talk, otherTalks }: Props) {
 
   return (
     <div
-      className="max-w-[1280px] mx-auto px-7 pb-20 grid gap-7"
-      style={{ gridTemplateColumns: "1fr 360px", marginTop: -40, position: "relative", zIndex: 5 }}
+      className="max-w-[1280px] mx-auto px-7 pb-20 grid gap-7 grid-cols-1 xl:grid-cols-[1fr_360px]"
+      style={{ marginTop: -40, position: "relative", zIndex: 5 }}
     >
 
       {/* ══ LEFT COLUMN ══ */}
       <div>
 
         {/* Player card */}
-        <div className="rounded-[28px] border-[3px] border-ink overflow-hidden"
-          style={{ background: "var(--wool)", boxShadow: "0 10px 0 var(--wool-shadow)" }}>
+        <div className="rounded-[28px] border-[3px] border-ink overflow-hidden bg-wool"
+          style={{ boxShadow: "0 10px 0 var(--wool-shadow)" }}>
 
           {/* Video area */}
-          <div className="relative bg-ink" style={{ aspectRatio: "16/9" }}>
+          <div className="relative bg-ink aspect-video">
             {/* Farm scene poster */}
             <div className="absolute inset-0">
               <svg width="100%" height="100%" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
@@ -176,8 +176,8 @@ export default function WatchClient({ talk, otherTalks }: Props) {
             {/* Big play */}
             {!playing && (
               <button
-                className="big-play-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110px] h-[110px] rounded-full border-[4px] border-ink flex items-center justify-center cursor-pointer z-10 hover:-translate-y-[calc(50%+3px)] hover:-rotate-3 transition-transform"
-                style={{ background: "var(--sun)", boxShadow: "0 6px 0 var(--ink)" }}
+                className="big-play-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110px] h-[110px] rounded-full border-[4px] border-ink flex items-center justify-center cursor-pointer z-10 hover:-translate-y-[calc(50%+3px)] hover:-rotate-3 transition-transform bg-sun"
+                style={{ boxShadow: "0 6px 0 var(--ink)" }}
                 onClick={() => setPlaying(true)}
                 aria-label="Play talk"
               />
@@ -233,14 +233,14 @@ export default function WatchClient({ talk, otherTalks }: Props) {
                 <div className="flex-1"/>
 
                 {/* Volume icon */}
-                <button className={`${ctlBtn} bg-cream text-ink`} style={{ boxShadow: "0 3px 0 var(--ink)" }} aria-label="Volume">
+                <button className={`hidden sm:flex ${ctlBtn} bg-cream text-ink`} style={{ boxShadow: "0 3px 0 var(--ink)" }} aria-label="Volume">
                   <IconVolume/>
                 </button>
 
                 {/* Volume slider */}
                 <div
                   ref={volRef}
-                  className="relative h-[14px] w-[110px] rounded-full border-2 border-ink cursor-pointer"
+                  className="hidden sm:block relative h-[14px] w-[110px] rounded-full border-2 border-ink cursor-pointer"
                   style={{ background: "white", boxShadow: "0 2px 0 var(--ink)" }}
                   onMouseDown={e => { vScrubbing.current = true; volFromEvt(e) }}
                 >
@@ -250,7 +250,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
 
                 {/* Speed */}
                 <button
-                  className="h-9 px-[14px] rounded-full border-[2.5px] border-ink inline-flex items-center gap-2 font-black text-ink text-[14px] cursor-pointer bg-cream"
+                  className="hidden sm:inline-flex h-9 px-[14px] rounded-full border-[2.5px] border-ink items-center gap-2 font-black text-ink text-[14px] cursor-pointer bg-cream"
                   style={{ boxShadow: "0 3px 0 var(--ink)" }}
                   onClick={() => setSpeedIdx(i => (i + 1) % SPEEDS.length)}
                 >
@@ -259,7 +259,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
 
                 {/* CC */}
                 <button
-                  className={`h-[42px] px-3 rounded-[14px] border-[2.5px] border-ink font-display font-black text-[13px] cursor-pointer transition-colors ${ctlBtn}`}
+                  className={`hidden sm:inline-flex h-[42px] px-3 rounded-[14px] border-[2.5px] border-ink font-display font-black text-[13px] cursor-pointer transition-colors items-center justify-center`}
                   style={{
                     background: ccOn ? "var(--sun)" : "var(--cream)",
                     boxShadow: "0 3px 0 var(--ink)",
@@ -273,12 +273,12 @@ export default function WatchClient({ talk, otherTalks }: Props) {
                 </button>
 
                 {/* PiP */}
-                <button className={`${ctlBtn} bg-cream text-ink`} style={{ boxShadow: "0 3px 0 var(--ink)" }} aria-label="Picture-in-picture">
+                <button className={`hidden sm:flex ${ctlBtn} bg-cream text-ink`} style={{ boxShadow: "0 3px 0 var(--ink)" }} aria-label="Picture-in-picture">
                   <IconPip/>
                 </button>
 
                 {/* Settings */}
-                <button className={`${ctlBtn} bg-cream text-ink`} style={{ boxShadow: "0 3px 0 var(--ink)" }} aria-label="Settings">
+                <button className={`hidden sm:flex ${ctlBtn} bg-cream text-ink`} style={{ boxShadow: "0 3px 0 var(--ink)" }} aria-label="Settings">
                   <IconSettings/>
                 </button>
 
@@ -291,7 +291,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
           </div>
 
           {/* Episode meta */}
-          <div className="px-[30px] py-[26px] pb-[30px]" style={{ borderTop: "3px solid var(--ink)", background: "var(--cream)" }}>
+          <div className="px-[30px] py-[26px] pb-[30px] bg-cream" style={{ borderTop: "3px solid var(--ink)" }}>
             <div className="flex items-center gap-[14px] mb-[14px] flex-wrap">
               <span className="bg-barn text-white text-[12px] font-black uppercase tracking-[.08em] px-3 py-1 rounded-full border-2 border-ink">
                 {talk.event}
@@ -327,22 +327,19 @@ export default function WatchClient({ talk, otherTalks }: Props) {
             <div className="flex gap-2.5 flex-wrap mt-[22px]">
               {talk.videoUrl && (
                 <a href={talk.videoUrl} target="_blank" rel="noreferrer"
-                  className="chip primary inline-flex items-center gap-2 bg-barn text-white border-[2.5px] border-ink rounded-full px-4 py-2.5 font-black text-[14px] no-underline hover:-translate-x-px hover:-translate-y-0.5 transition-transform"
-                  style={{ boxShadow: "0 4px 0 var(--barn-2)" }}>
+                  className="chip primary inline-flex items-center gap-2 bg-barn text-white border-[2.5px] border-ink rounded-full px-4 py-2.5 font-black text-[14px] no-underline hover:-translate-x-px hover:-translate-y-0.5 transition-transform shadow-barn">
                   ▶ Watch on YouTube
                 </a>
               )}
               {talk.slidesUrl && (
                 <a href={talk.slidesUrl} target="_blank" rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-sun text-ink border-[2.5px] border-ink rounded-full px-4 py-2.5 font-black text-[14px] no-underline hover:-translate-x-px hover:-translate-y-0.5 transition-transform"
-                  style={{ boxShadow: "0 4px 0 var(--sun-2)" }}>
+                  className="inline-flex items-center gap-2 bg-sun text-ink border-[2.5px] border-ink rounded-full px-4 py-2.5 font-black text-[14px] no-underline hover:-translate-x-px hover:-translate-y-0.5 transition-transform shadow-sun">
                   ↗ Slides
                 </a>
               )}
               {["♥ Save", "↗ Share", "＋ Playlist"].map(label => (
                 <button key={label}
-                  className="inline-flex items-center gap-2 bg-white text-ink border-[2.5px] border-ink rounded-full px-4 py-2.5 font-black text-[14px] cursor-pointer hover:-translate-x-px hover:-translate-y-0.5 transition-transform"
-                  style={{ boxShadow: "0 4px 0 var(--wool-shadow)" }}>
+                  className="inline-flex items-center gap-2 bg-white text-ink border-[2.5px] border-ink rounded-full px-4 py-2.5 font-black text-[14px] cursor-pointer hover:-translate-x-px hover:-translate-y-0.5 transition-transform shadow-md">
                   {label}
                 </button>
               ))}
@@ -352,8 +349,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
 
         {/* ── Chapters ── */}
         {talk.chapters && (
-          <div className="mt-7 rounded-[24px] border-[3px] border-ink overflow-hidden"
-            style={{ background: "var(--cream-2)", boxShadow: "0 8px 0 var(--wool-shadow)" }}>
+          <div className="mt-7 rounded-[24px] border-[3px] border-ink overflow-hidden bg-cream2 shadow-xl">
             <h3 className="font-display text-[24px] text-ink px-6 py-[18px] flex items-center gap-[10px]"
               style={{ borderBottom: "2px dashed color-mix(in oklab, var(--ink) 25%, transparent)" }}>
               <span className="font-hand text-grass2 text-[24px] -rotate-3 inline-block">jump to</span>
@@ -363,9 +359,8 @@ export default function WatchClient({ talk, otherTalks }: Props) {
               <div
                 key={ch.num}
                 onClick={() => { jumpTo(ch.timecode); setActiveChap(i) }}
-                className="grid gap-4 px-6 py-[14px] items-center cursor-pointer transition-colors"
+                className="grid gap-4 px-6 py-[14px] items-center cursor-pointer transition-colors grid-cols-[48px_1fr] sm:grid-cols-[60px_100px_1fr_80px]"
                 style={{
-                  gridTemplateColumns: "60px 100px 1fr 80px",
                   borderBottom: i < talk.chapters!.length - 1 ? "1px solid color-mix(in oklab, var(--ink) 15%, transparent)" : undefined,
                   background: activeChap === i ? "var(--sun)" : undefined,
                 }}
@@ -376,13 +371,14 @@ export default function WatchClient({ talk, otherTalks }: Props) {
                   style={{ color: activeChap === i ? "var(--ink)" : "var(--barn)" }}>
                   {ch.num}
                 </span>
-                <div className="rounded-[10px] border-[2.5px] border-ink overflow-hidden"
-                  style={{ aspectRatio: "16/10", background: ch.accent }}/>
+                <div className="hidden sm:block rounded-[10px] border-[2.5px] border-ink overflow-hidden aspect-[16/10]"
+                  style={{ background: ch.accent }}/>
                 <div>
                   <h4 className="font-display font-black text-[18px] text-ink mb-0.5">{ch.title}</h4>
                   <div className="text-[13px] font-semibold" style={{ color: "color-mix(in oklab, var(--ink) 75%, transparent)" }}>{ch.subtitle}</div>
+                  <div className="sm:hidden font-display font-black text-[13px] text-ink mt-0.5">{ch.timecode}</div>
                 </div>
-                <div className="font-display font-black text-right text-ink">{ch.timecode}</div>
+                <div className="hidden sm:block font-display font-black text-right text-ink">{ch.timecode}</div>
               </div>
             ))}
           </div>
@@ -391,8 +387,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
         {/* ── Speaker's note (styled as blog card) ── */}
         {talk.speakerNote && (
           <article
-            className="mt-7 rounded-[24px] border-[3px] border-ink p-[30px] pb-9"
-            style={{ background: "var(--cream)", boxShadow: "0 8px 0 var(--wool-shadow)" }}
+            className="mt-7 rounded-[24px] border-[3px] border-ink p-[30px] pb-9 bg-cream shadow-xl"
           >
             <div className="flex gap-3 items-center flex-wrap mb-[14px] font-black text-[13px]" style={{ color: "color-mix(in oklab, var(--ink) 70%, transparent)" }}>
               <span className="bg-barn text-white border-2 border-ink rounded-full px-3 py-0.5 text-[12px] uppercase tracking-[.08em]">Speaker&apos;s Note</span>
@@ -424,8 +419,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
 
         {/* ── Transcript ── */}
         {talk.transcript && (
-          <div className="mt-7 rounded-[24px] border-[3px] border-ink p-6 pb-7"
-            style={{ background: "var(--wool)", boxShadow: "0 8px 0 var(--wool-shadow)" }}>
+          <div className="mt-7 rounded-[24px] border-[3px] border-ink p-6 pb-7 bg-wool shadow-xl">
             <h3 className="font-display font-black text-[24px] text-ink mb-[18px]">
               Transcript &nbsp;
               <span className="font-hand text-[22px] font-normal" style={{ color: "var(--barn-2)" }}>
@@ -434,9 +428,8 @@ export default function WatchClient({ talk, otherTalks }: Props) {
             </h3>
             {talk.transcript.map((line, i) => (
               <div key={i}
-                className="grid gap-4 py-2 text-[15px] font-semibold leading-[1.5]"
+                className="grid gap-4 py-2 text-[15px] font-semibold leading-[1.5] grid-cols-[60px_1fr] sm:grid-cols-[70px_1fr]"
                 style={{
-                  gridTemplateColumns: "70px 1fr",
                   borderBottom: i < talk.transcript!.length - 1 ? "1px dashed color-mix(in oklab, var(--ink) 18%, transparent)" : undefined,
                 }}
               >
@@ -461,8 +454,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
       <aside className="flex flex-col gap-[22px]">
 
         {/* About the speaker */}
-        <div className="rounded-[24px] border-[3px] border-ink p-[22px] pb-6"
-          style={{ background: "var(--cream-2)", boxShadow: "0 8px 0 var(--wool-shadow)" }}>
+        <div className="rounded-[24px] border-[3px] border-ink p-[22px] pb-6 bg-cream2 shadow-xl">
           <div className="flex items-center gap-[14px] mb-[14px]">
             <div className="w-[60px] h-[60px] rounded-full border-[2.5px] border-ink flex-shrink-0 flex items-center justify-center font-display font-black text-[22px] text-ink bg-sun"
               style={{ boxShadow: "0 3px 0 var(--ink)" }}>
@@ -487,15 +479,13 @@ export default function WatchClient({ talk, otherTalks }: Props) {
               </div>
             ))}
           </div>
-          <button className="block text-center w-full bg-barn text-white border-[2.5px] border-ink rounded-full py-3 font-black text-[15px] cursor-pointer hover:-translate-y-px transition-transform"
-            style={{ boxShadow: "0 4px 0 var(--barn-2)" }}>
+          <button className="block text-center w-full bg-barn text-white border-[2.5px] border-ink rounded-full py-3 font-black text-[15px] cursor-pointer hover:-translate-y-px transition-transform shadow-barn">
             ▶ Subscribe on YouTube
           </button>
         </div>
 
         {/* Up next */}
-        <div className="rounded-[24px] border-[3px] border-ink overflow-hidden"
-          style={{ background: "var(--wool)", boxShadow: "0 8px 0 var(--wool-shadow)" }}>
+        <div className="rounded-[24px] border-[3px] border-ink overflow-hidden bg-wool shadow-xl">
           <div className="bg-barn text-white border-b-[3px] border-ink px-[22px] py-4 flex justify-between items-center">
             <h3 className="font-display text-[22px]">More Episodes</h3>
             <span className="bg-sun text-ink text-[12px] font-black px-3 py-0.5 rounded-full border-2 border-ink">
@@ -504,16 +494,15 @@ export default function WatchClient({ talk, otherTalks }: Props) {
           </div>
           {otherTalks.map((t, i) => (
             <div key={t.id}
-              className="grid gap-[14px] p-[14px] cursor-pointer transition-colors"
+              className="grid gap-[14px] p-[14px] cursor-pointer transition-colors grid-cols-[100px_1fr] sm:grid-cols-[130px_1fr]"
               style={{
-                gridTemplateColumns: "130px 1fr",
                 borderBottom: i < otherTalks.length - 1 ? "1px dashed color-mix(in oklab, var(--ink) 25%, transparent)" : undefined,
               }}
               onMouseEnter={e => e.currentTarget.style.background = "var(--cream-2)"}
               onMouseLeave={e => e.currentTarget.style.background = ""}
             >
-              <div className="rounded-[12px] border-[2.5px] border-ink overflow-hidden relative"
-                style={{ aspectRatio: "16/10", background: t.accentColor }}>
+              <div className="rounded-[12px] border-[2.5px] border-ink overflow-hidden relative aspect-[16/10]"
+                style={{ background: t.accentColor }}>
                 <span className="absolute bottom-1.5 right-1.5 bg-ink text-white text-[11px] font-black px-2 rounded">
                   {t.duration}
                 </span>
@@ -531,10 +520,8 @@ export default function WatchClient({ talk, otherTalks }: Props) {
         </div>
 
         {/* Newsletter */}
-        <div className="rounded-[24px] border-[3px] border-ink overflow-hidden"
-          style={{ background: "var(--sun)", boxShadow: "0 8px 0 var(--wool-shadow)" }}>
-          <div className="border-b-[3px] border-ink px-[22px] py-4"
-            style={{ background: "var(--sun)" }}>
+        <div className="rounded-[24px] border-[3px] border-ink overflow-hidden bg-sun shadow-xl">
+          <div className="border-b-[3px] border-ink px-[22px] py-4 bg-sun">
             <h3 className="font-display text-[22px] text-ink">The Weekly Bleat</h3>
           </div>
           <div className="p-[18px] pb-[22px]">

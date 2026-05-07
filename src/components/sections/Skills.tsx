@@ -12,11 +12,10 @@ function parseHeading(text: string) {
 function SkillTile({ icon, label, dark }: { icon: string; label: string; dark?: boolean }) {
   return (
     <div
-      className="tile-hover flex flex-col items-center text-center font-black text-[14px] rounded-2xl border-[2.5px] border-ink px-2.5 py-3.5"
+      className="tile-hover flex flex-col items-center text-center font-black text-[14px] rounded-2xl border-[2.5px] border-ink px-2.5 py-3.5 shadow-ink"
       style={{
         background: dark ? "var(--cream)" : "white",
         color: "var(--ink)",
-        boxShadow: "0 4px 0 var(--ink)",
       }}
     >
       <div
@@ -33,11 +32,10 @@ function SkillTile({ icon, label, dark }: { icon: string; label: string; dark?: 
 function Panel({ config }: { config: PanelConfig }) {
   return (
     <div
-      className="rounded-[28px] border-[2.5px] border-ink p-7 relative overflow-hidden"
+      className="rounded-[28px] border-[2.5px] border-ink p-7 relative overflow-hidden shadow-xl"
       style={{
         background: config.dark ? "var(--grass-2, var(--grass2))" : "var(--wool)",
         color:      config.dark ? "var(--cream)" : "var(--ink)",
-        boxShadow:  "0 8px 0 var(--wool-shadow)",
       }}
     >
       <span
@@ -58,7 +56,7 @@ function Panel({ config }: { config: PanelConfig }) {
       >
         {config.subtext}
       </p>
-      <div className="grid gap-3.5" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+      <div className="grid gap-3.5 grid-cols-2 sm:grid-cols-3">
         {config.items.map(item => (
           <SkillTile key={item.label} icon={item.icon} label={item.label} dark={config.dark} />
         ))}
@@ -70,7 +68,7 @@ function Panel({ config }: { config: PanelConfig }) {
 export function Skills({ panels }: { panels: [PanelConfig, PanelConfig] }) {
   return (
     <section id="skills" className="py-20 px-7 max-w-[1280px] mx-auto">
-      <div className="grid gap-5" style={{ gridTemplateColumns: "1fr 1fr" }}>
+      <div className="grid gap-5 grid-cols-1 lg:grid-cols-2">
         {panels.map(p => <Panel key={p.heading} config={p} />)}
       </div>
     </section>

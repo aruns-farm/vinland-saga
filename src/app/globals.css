@@ -2,7 +2,10 @@
 
 /* ── Design tokens from the Woolly & Co. design system ── */
 @theme {
+  /* ── Colors ── */
   --color-ink:         #2a2418;
+  --color-ink-soft:    #5b5040;
+  --color-paper:       #fffaec;
   --color-cream:       #fbf3df;
   --color-cream2:      #f3e6c5;
   --color-grass:       #6aa84f;
@@ -20,16 +23,38 @@
   --color-dirt:        #8b6a45;
   --color-pink:        #ef9fb0;
 
+  /* ── Fonts ── */
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-body:    var(--font-nunito), system-ui, sans-serif;
   --font-hand:    var(--font-caveat), cursive;
+
+  /* ── Shadows — flat offset, no blur ── */
+  /* Wool (neutral) scale */
+  --shadow-xs:   0 2px 0 var(--wool-shadow);
+  --shadow-sm:   0 3px 0 var(--wool-shadow);
+  --shadow-md:   0 4px 0 var(--wool-shadow);
+  --shadow-lg:   0 6px 0 var(--wool-shadow);
+  --shadow-xl:   0 8px 0 var(--wool-shadow);
+  /* Accent shadows */
+  --shadow-barn: 0 4px 0 var(--barn-2);
+  --shadow-sun:  0 3px 0 var(--sun-2);
+  --shadow-ink:  0 4px 0 var(--ink);
+
+  /* ── Border radius ── */
+  --radius-tag:     8px;
+  --radius-card:    18px;
+  --radius-card-lg: 24px;
+  --radius-pill:    999px;
 }
 
 /* ── CSS variables for runtime use (not Tailwind) ── */
 :root {
+  /* colours */
   --ink:         #2a2418;
+  --ink-soft:    #5b5040;
   --cream:       #fbf3df;
   --cream-2:     #f3e6c5;
+  --paper:       #fffaec;
   --grass:       #6aa84f;
   --grass-2:     #4d8836;
   --grass-3:     #3a6a28;
@@ -44,6 +69,31 @@
   --hoof:        #3a3024;
   --dirt:        #8b6a45;
   --pink:        #ef9fb0;
+  --rule:        color-mix(in oklab, var(--ink) 18%, transparent);
+
+  /* radii */
+  --r-pill:    999px;
+  --r-card:    18px;
+  --r-card-lg: 24px;
+  --r-tag:     8px;
+
+  /* shadows — chunky offset, no blur */
+  --sh-sm:   0 2px 0 var(--wool-shadow);
+  --sh-md:   0 4px 0 var(--wool-shadow);
+  --sh-lg:   0 6px 0 var(--wool-shadow);
+  --sh-xl:   0 8px 0 var(--wool-shadow);
+  --sh-barn: 0 4px 0 var(--barn-2);
+  --sh-sun:  0 3px 0 var(--sun-2);
+
+  /* borders */
+  --b-thin:  2px solid var(--ink);
+  --b:       2.5px solid var(--ink);
+  --b-thick: 3px solid var(--ink);
+  --b-dash:  2px dashed var(--ink);
+
+  /* spacing scale */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
 }
 
 * { box-sizing: border-box; }

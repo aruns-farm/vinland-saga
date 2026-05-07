@@ -4,10 +4,9 @@ import { Eyebrow } from "@/components/ui/Tag"
 function WorkCard({ entry, big }: { entry: WorkEntry; big?: boolean }) {
   return (
     <article
-      className="card-hover-straight rounded-3xl border-[2.5px] border-ink overflow-hidden flex flex-col"
+      className="card-hover-straight rounded-3xl border-[2.5px] border-ink overflow-hidden flex flex-col shadow-lg"
       style={{
         background: "var(--cream-2, var(--cream2))",
-        boxShadow: "0 6px 0 var(--wool-shadow)",
       }}
     >
       {/* Thumbnail — coloured gradient like ep-thumb */}
@@ -19,20 +18,20 @@ function WorkCard({ entry, big }: { entry: WorkEntry; big?: boolean }) {
         }}
       >
         <div
-          className="w-[72px] h-[72px] rounded-full border-[2.5px] border-ink flex items-center justify-center"
-          style={{ background: "white", boxShadow: "0 4px 0 var(--ink)" }}
+          className="w-[72px] h-[72px] rounded-full border-[2.5px] border-ink flex items-center justify-center shadow-ink"
+          style={{ background: "white" }}
         >
           <span className="text-[28px]">💼</span>
         </div>
         <span
-          className="absolute bottom-2.5 right-2.5 font-black text-[13px] px-2.5 py-0.5 rounded"
-          style={{ background: "var(--ink)", color: "var(--cream)" }}
+          className="absolute bottom-2.5 right-2.5 font-black text-[13px] px-2.5 py-0.5 rounded bg-ink"
+          style={{ color: "var(--cream)" }}
         >
           {entry.period}
         </span>
         <span
-          className="absolute top-2.5 left-2.5 font-black text-[12px] px-2.5 py-1 rounded-full border-2 border-ink uppercase tracking-[.08em]"
-          style={{ background: "var(--barn)", color: "white" }}
+          className="absolute top-2.5 left-2.5 font-black text-[12px] px-2.5 py-1 rounded-full border-2 border-ink uppercase tracking-[.08em] bg-barn"
+          style={{ color: "white" }}
         >
           {entry.company}
         </span>
@@ -82,7 +81,7 @@ export function Work({ entries }: { entries: WorkEntry[] }) {
         </div>
 
         {/* Primary layout: big + smaller cards */}
-        <div className="grid gap-5" style={{ gridTemplateColumns: "2fr 1fr 1fr" }}>
+        <div className="grid gap-5 grid-cols-1 md:grid-cols-[2fr_1fr_1fr]">
           {featured && <WorkCard entry={featured} big />}
           {rest.map(e => <WorkCard key={e.id} entry={e} />)}
         </div>

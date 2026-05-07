@@ -4,8 +4,8 @@ import { LogoMark } from "@/components/ui/LogoMark"
 export function Footer({ config }: { config: PortfolioConfig }) {
   return (
     <footer className="bg-ink text-cream pt-12 pb-6 px-7">
-      <div className="max-w-[1280px] mx-auto grid gap-10" style={{ gridTemplateColumns: "2fr 1fr 1fr 1fr" }}>
-        <div>
+      <div className="max-w-[1280px] mx-auto grid gap-10 grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div className="col-span-2 md:col-span-1">
           <div className="flex items-center gap-2.5 mb-3">
             <LogoMark size={38} />
             <span className="font-display font-black text-[26px] tracking-tight text-cream">
@@ -36,7 +36,7 @@ export function Footer({ config }: { config: PortfolioConfig }) {
       </div>
 
       <div
-        className="max-w-[1280px] mx-auto mt-8 pt-5 flex justify-between text-[12px] opacity-60"
+        className="max-w-[1280px] mx-auto mt-8 pt-5 flex flex-wrap justify-between gap-2 text-[12px] opacity-60"
         style={{ borderTop: "1px dashed rgba(255,255,255,.2)" }}
       >
         <span>{config.footer.legal}</span>

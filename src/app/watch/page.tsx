@@ -25,11 +25,10 @@ function YtCard({ talk, nth }: { talk: Talk; nth: number }) {
 
   return (
     <article
-      className="rounded-[20px] border-[2.5px] border-ink overflow-hidden cursor-pointer card-hover"
-      style={{ background: "var(--wool)", boxShadow: "0 6px 0 var(--wool-shadow)" }}
+      className="rounded-[20px] border-[2.5px] border-ink overflow-hidden cursor-pointer card-hover bg-wool shadow-lg"
     >
       {/* Thumbnail */}
-      <div className="relative border-b-[2.5px] border-ink" style={{ aspectRatio: "16/9", background: bg }}>
+      <div className="relative border-b-[2.5px] border-ink aspect-video" style={{ background: bg }}>
         {/* YouTube badge */}
         <span
           className="absolute top-[10px] left-[10px] bg-white text-ink border-2 border-ink rounded-[6px] px-2 py-0.5 text-[11px] font-black inline-flex items-center gap-1.5"
@@ -40,8 +39,7 @@ function YtCard({ talk, nth }: { talk: Talk; nth: number }) {
 
         {/* Play mini */}
         <div
-          className="yt-play-mini absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-barn border-[3px] border-ink flex items-center justify-center"
-          style={{ boxShadow: "0 4px 0 var(--ink)" }}
+          className="yt-play-mini absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-barn border-[3px] border-ink flex items-center justify-center shadow-ink"
         />
 
         {/* Duration */}
@@ -84,19 +82,19 @@ export default function WatchPage() {
           }}
         >
           {/* Cloud 1 */}
-          <div className="cloud absolute" style={{ top: 30, right: 120, width: 140, height: 34 }}>
+          <div className="cloud hidden sm:block absolute" style={{ top: 30, right: 120, width: 140, height: 34 }}>
             <span className="absolute rounded-full bg-white" style={{ width: 60, height: 60, top: -28, left: 24 }}/>
             <span className="absolute rounded-full bg-white" style={{ width: 46, height: 46, top: -22, left: 72 }}/>
           </div>
           {/* Cloud 2 */}
-          <div className="cloud absolute" style={{ top: 90, right: 380, width: 90, height: 24 }}>
+          <div className="cloud hidden sm:block absolute" style={{ top: 90, right: 380, width: 90, height: 24 }}>
             <span className="absolute rounded-full bg-white" style={{ width: 42, height: 42, top: -20, left: 14 }}/>
             <span className="absolute rounded-full bg-white" style={{ width: 0, height: 0 }}/>
           </div>
 
           {/* Peeking sheep */}
           <svg
-            className="absolute"
+            className="hidden sm:block absolute"
             style={{ bottom: -2, right: 60 }}
             width="160" height="120"
             viewBox="0 0 160 120"
@@ -128,8 +126,8 @@ export default function WatchPage() {
 
             {/* Kicker */}
             <span
-              className="font-hand text-[30px] inline-block mb-[14px] px-[14px] py-[2px] rounded-[8px] border-2 border-ink"
-              style={{ background: "var(--sun)", transform: "rotate(-2deg)" }}
+              className="font-hand text-[30px] inline-block mb-[14px] px-[14px] py-[2px] rounded-[8px] border-2 border-ink bg-sun"
+              style={{ transform: "rotate(-2deg)" }}
             >
               Now playing 🐑
             </span>
@@ -166,21 +164,19 @@ export default function WatchPage() {
             </div>
             <Link
               href="/watch"
-              className="inline-flex items-center gap-2 bg-white text-ink border-[2.5px] border-ink rounded-full px-[18px] py-2 font-black text-[14px] no-underline hover:bg-cream2 transition-colors"
-              style={{ boxShadow: "0 3px 0 var(--wool-shadow)" }}
+              className="inline-flex items-center gap-2 bg-white text-ink border-[2.5px] border-ink rounded-full px-[18px] py-2 font-black text-[14px] no-underline hover:bg-cream2 transition-colors shadow-sm"
             >
               View all episodes →
             </Link>
           </div>
 
-          <div className="grid gap-[18px]" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+          <div className="grid gap-[18px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {talks.map((t, i) => (
               <YtCard key={t.id} talk={t} nth={i} />
             ))}
             {/* pad to 4 columns */}
             {Array.from({ length: Math.max(0, 4 - talks.length) }).map((_, i) => (
-              <div key={`pad-${i}`} className="rounded-[20px] border-[2.5px] border-dashed border-ink opacity-30"
-                style={{ aspectRatio: "16/9", background: "var(--cream-2)" }}/>
+              <div key={`pad-${i}`} className="rounded-[20px] border-[2.5px] border-dashed border-ink opacity-30 aspect-video bg-cream2"/>
             ))}
           </div>
         </section>

@@ -6,8 +6,8 @@ function ArticleCard({ article }: { article: Article }) {
   return (
     <Link href={`/blog/${article.slug}`} className="block no-underline group">
       <article
-        className="card-hover rounded-[20px] border-[2.5px] border-ink overflow-hidden"
-        style={{ background: "var(--cream)", boxShadow: "0 6px 0 rgba(0,0,0,.2)" }}
+        className="card-hover rounded-[20px] border-[2.5px] border-ink overflow-hidden bg-cream"
+        style={{ boxShadow: "0 6px 0 rgba(0,0,0,.2)" }}
       >
         <div
           className="aspect-video border-b-[2.5px] border-ink"
@@ -56,7 +56,7 @@ export function Writing({ articles }: { articles: Article[] }) {
           </Link>
         </div>
 
-        <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map(a => <ArticleCard key={a.slug} article={a} />)}
         </div>
       </div>

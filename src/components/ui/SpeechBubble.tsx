@@ -1,34 +1,52 @@
-interface SpeechBubbleProps {
-  children: React.ReactNode
-  variant?: "white" | "sun"
-  rotate?: number
+import { type ReactNode } from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/cn"
+
+const bubble = cva(
+  "relative inline-block px-[14px] py-[6px] border-[2.5px] border-ink rounded-[18px] font-hand text-[22px] whitespace-nowrap shadow-xs",
+  {
+    variants: {
+      variant: {
+        white: "bg-white text-ink",
+        sun:   "bg-sun   text-ink",
+        barn:  "bg-barn  text-white",
+      },
+    },
+    defaultVariants: { variant: "white" },
+  }
+)
+
+const tail = cva(
+  "absolute border-r-[2.5px] border-b-[2.5px] border-ink w-[14px] h-[14px] bottom-[-9px] left-[30%] rotate-45 block",
+  {
+    variants: {
+      variant: {
+        white: "bg-white",
+        sun:   "bg-sun",
+        barn:  "bg-barn",
+      },
+    },
+    defaultVariants: { variant: "white" },
+  }
+)
+
+type BubbleVariantProps = VariantProps<typeof bubble>
+export type SpeechBubbleVariant = NonNullable<BubbleVariantProps["variant"]>
+
+interface SpeechBubbleProps extends BubbleVariantProps {
+  children:   ReactNode
+  rotate?:    number
   className?: string
 }
 
-export function SpeechBubble({ children, variant = "white", rotate = -4, className = "" }: SpeechBubbleProps) {
-  const bg = variant === "sun" ? "var(--sun)" : "white"
-
+export function SpeechBubble({ children, variant, rotate = -4, className }: SpeechBubbleProps) {
   return (
     <div
-      className={`relative inline-block px-[14px] py-[6px] border-[2.5px] border-ink rounded-[18px] font-hand text-[22px] whitespace-nowrap ${className}`}
-      style={{
-        background: bg,
-        boxShadow: "0 3px 0 var(--wool-shadow)",
-        transform: `rotate(${rotate}deg)`,
-      }}
+      className={cn(bubble({ variant }), className)}
+      style={{ transform: `rotate(${rotate}deg)` }}
     >
       {children}
-      {/* tail */}
-      <span
-        className="absolute border-r-[2.5px] border-b-[2.5px] border-ink"
-        style={{
-          bottom: -9, left: "30%",
-          width: 14, height: 14,
-          background: bg,
-          transform: "rotate(45deg)",
-          display: "block",
-        }}
-      />
+      <span className={tail({ variant })} aria-hidden="true" />
     </div>
   )
 }
