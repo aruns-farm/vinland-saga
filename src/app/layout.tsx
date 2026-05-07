@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Fraunces, Nunito, Caveat } from "next/font/google"
 import "./globals.css"
+import { UnderConstruction } from "@/components/layout/UnderConstruction"
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -32,7 +33,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${nunito.variable} ${caveat.variable}`}>
-      <body>{children}</body>
+      <body>
+        <UnderConstruction />
+        {children}
+      </body>
     </html>
   )
 }

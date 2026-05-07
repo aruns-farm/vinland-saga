@@ -1,29 +1,29 @@
+import Link from "next/link"
 import type { Article } from "@/lib/types"
-import { NewsTag } from "@/components/ui/Tag"
+import { TagPill } from "@/components/ui/Tag"
 
 function ArticleCard({ article }: { article: Article }) {
   return (
-    <article
-      className="rounded-[20px] border-[2.5px] border-ink overflow-hidden cursor-pointer"
-      style={{ background: "var(--cream)", color: "var(--ink)", boxShadow: "0 6px 0 rgba(0,0,0,.2)" }}
-    >
-      <div
-        className="aspect-video border-b-[2.5px] border-ink flex items-center justify-center"
-        style={{ background: article.accentGradient }}
-      />
-      <div className="p-4">
-        <NewsTag>{article.tag}</NewsTag>
-        <h3 className="font-[family-name:var(--font-fraunces)] text-[22px] my-2.5">
-          {article.title}
-        </h3>
-        <p
-          className="text-[14px] m-0 font-semibold"
-          style={{ color: "color-mix(in oklab, var(--ink) 75%, transparent)" }}
-        >
-          {article.summary}
-        </p>
-      </div>
-    </article>
+    <Link href={`/blog/${article.slug}`} className="block no-underline group">
+      <article
+        className="card-hover rounded-[20px] border-[2.5px] border-ink overflow-hidden"
+        style={{ background: "var(--cream)", boxShadow: "0 6px 0 rgba(0,0,0,.2)" }}
+      >
+        <div
+          className="aspect-video border-b-[2.5px] border-ink"
+          style={{ background: article.accentGradient }}
+        />
+        <div className="p-4">
+          <TagPill variant="sun">{article.tag}</TagPill>
+          <h3 className="font-display text-[22px] text-ink my-2.5 group-hover:text-barn transition-colors">
+            {article.title}
+          </h3>
+          <p className="text-[14px] m-0 font-semibold text-ink/75">
+            {article.summary}
+          </p>
+        </div>
+      </article>
+    </Link>
   )
 }
 
@@ -31,37 +31,33 @@ export function Writing({ articles }: { articles: Article[] }) {
   return (
     <div
       id="writing"
-      style={{ background: "var(--barn)", color: "white", borderTop: "3px solid var(--ink)", borderBottom: "3px solid var(--ink)" }}
-      className="py-16 px-7"
+      className="py-16 px-7 bg-barn text-white"
+      style={{ borderTop: "3px solid var(--ink)", borderBottom: "3px solid var(--ink)" }}
     >
       <div className="max-w-[1280px] mx-auto">
         <div className="flex items-end justify-between mb-8 flex-wrap gap-5">
           <div>
-            <span
-              className="font-[family-name:var(--font-caveat)] text-[28px] inline-block"
-              style={{ color: "var(--sun)" }}
-            >
+            <span className="font-hand text-[28px] inline-block text-sun">
               ~ from the desk ~
             </span>
             <h2
-              className="font-[family-name:var(--font-fraunces)] font-black"
-              style={{ fontSize: "clamp(40px,5vw,56px)", color: "white" }}
+              className="font-display font-black text-white"
+              style={{ fontSize: "clamp(40px,5vw,56px)" }}
             >
               Writing &amp;{" "}
-              <em style={{ fontStyle: "italic", color: "var(--sun)" }}>Thinking</em>
+              <em className="italic text-sun">Thinking</em>
             </h2>
           </div>
-          <a
-            href="#"
-            className="font-black no-underline"
-            style={{ color: "white", textDecoration: "underline wavy var(--sun)", textUnderlineOffset: 5 }}
+          <Link
+            href="/blog"
+            className="font-black no-underline text-white hover:text-sun transition-colors"
           >
             All posts →
-          </a>
+          </Link>
         </div>
 
         <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-          {articles.map(a => <ArticleCard key={a.title} article={a} />)}
+          {articles.map(a => <ArticleCard key={a.slug} article={a} />)}
         </div>
       </div>
     </div>

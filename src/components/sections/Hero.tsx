@@ -1,21 +1,22 @@
 import type { HeroConfig } from "@/lib/types"
 import { Button } from "@/components/ui/Button"
+import { SpeechBubble } from "@/components/ui/SpeechBubble"
 
-/* Parse *word* → <em>word</em> */
 function parseHeadline(text: string) {
   const parts = text.split(/(\*[^*]+\*)/)
   return parts.map((p, i) =>
-    p.startsWith("*") ? <em key={i} style={{ fontStyle: "italic", color: "var(--barn)" }}>{p.slice(1, -1)}</em> : p
+    p.startsWith("*")
+      ? <em key={i} className="not-italic text-barn italic">{p.slice(1, -1)}</em>
+      : p
   )
 }
 
-/* Animated SVG sun */
 function Sun() {
   return (
     <div
-      className="absolute"
+      className="absolute rounded-full"
       style={{
-        right: 120, top: 60, width: 130, height: 130, borderRadius: "50%",
+        right: 120, top: 60, width: 130, height: 130,
         background: "var(--sun)",
         boxShadow: "0 0 0 14px color-mix(in oklab, var(--sun) 40%, transparent), 0 0 0 28px color-mix(in oklab, var(--sun) 20%, transparent)",
         animation: "spin 40s linear infinite",
@@ -25,54 +26,16 @@ function Sun() {
   )
 }
 
-/* Drifting cloud */
 function Cloud({ style }: { style: React.CSSProperties }) {
   return (
     <div
-      className="absolute"
-      style={{
-        background: "white", borderRadius: 999,
-        boxShadow: "inset -4px -6px 0 rgba(0,0,0,.06)",
-        ...style,
-      }}
+      className="absolute rounded-[999px]"
+      style={{ background: "white", boxShadow: "inset -4px -6px 0 rgba(0,0,0,.06)", ...style }}
       aria-hidden="true"
     />
   )
 }
 
-/* Person SVG — represents the portfolio owner */
-function PersonSVG() {
-  return (
-    <svg width="180" height="220" viewBox="0 0 180 220" aria-hidden="true">
-      {/* body */}
-      <rect x="60" y="100" width="60" height="80" rx="6" fill="#4d6d99" stroke="#2a2418" strokeWidth="3" />
-      {/* head */}
-      <circle cx="90" cy="76" r="32" fill="#ffd9b0" stroke="#2a2418" strokeWidth="3" />
-      {/* hair */}
-      <path d="M 62 68 Q 62 42 90 40 Q 118 42 118 68 Q 110 54 90 52 Q 70 54 62 68 Z" fill="#2a2418" />
-      {/* eyes */}
-      <circle cx="80" cy="76" r="3" fill="#2a2418" />
-      <circle cx="100" cy="76" r="3" fill="#2a2418" />
-      {/* smile */}
-      <path d="M 82 88 Q 90 95 98 88" stroke="#2a2418" strokeWidth="2.5" fill="none" />
-      {/* arms */}
-      <rect x="20" y="100" width="44" height="16" rx="8" fill="#4d6d99" stroke="#2a2418" strokeWidth="3" />
-      <rect x="116" y="100" width="44" height="16" rx="8" fill="#4d6d99" stroke="#2a2418" strokeWidth="3" />
-      {/* laptop */}
-      <rect x="24" y="116" width="36" height="24" rx="4" fill="#2a2418" stroke="#2a2418" strokeWidth="2" />
-      <rect x="26" y="118" width="32" height="18" rx="2" fill="#bce3ef" />
-      {/* code lines on laptop */}
-      <line x1="29" y1="122" x2="48" y2="122" stroke="#2a2418" strokeWidth="2" strokeLinecap="round" />
-      <line x1="29" y1="127" x2="44" y2="127" stroke="#4d8836" strokeWidth="2" strokeLinecap="round" />
-      <line x1="29" y1="132" x2="40" y2="132" stroke="#c94a3a" strokeWidth="2" strokeLinecap="round" />
-      {/* legs */}
-      <rect x="68" y="178" width="18" height="36" rx="4" fill="#2a2418" stroke="#2a2418" strokeWidth="2" />
-      <rect x="94" y="178" width="18" height="36" rx="4" fill="#2a2418" stroke="#2a2418" strokeWidth="2" />
-    </svg>
-  )
-}
-
-/* Barn SVG from original design */
 function BarnSVG() {
   return (
     <svg className="absolute" style={{ left: 48, bottom: 80, width: 220, height: 220 }} viewBox="0 0 220 220" aria-hidden="true">
@@ -93,29 +56,99 @@ function BarnSVG() {
   )
 }
 
-/* Speech bubble */
-function SpeechBubble({ text }: { text: string }) {
+function PersonSVG() {
   return (
-    <div
-      className="absolute pointer-events-none"
-      style={{
-        bottom: "calc(100% + 8px)", left: "50%", transform: "translateX(-50%) rotate(-4deg)",
-        background: "white", border: "2.5px solid var(--ink)",
-        padding: "6px 14px", borderRadius: 18,
-        fontFamily: "var(--font-caveat, 'Caveat', cursive)", fontSize: 22, whiteSpace: "nowrap",
-        boxShadow: "0 3px 0 var(--wool-shadow)",
-      }}
-    >
-      {text}
-      <span
-        style={{
-          content: "", position: "absolute", bottom: -9, left: "30%",
-          width: 14, height: 14, background: "white",
-          borderRight: "2.5px solid var(--ink)", borderBottom: "2.5px solid var(--ink)",
-          transform: "rotate(45deg)", display: "block",
-        }}
-      />
-    </div>
+    <svg width="180" height="220" viewBox="0 0 180 220" aria-hidden="true">
+      <rect x="60" y="100" width="60" height="80" rx="6" fill="#4d6d99" stroke="#2a2418" strokeWidth="3" />
+      <circle cx="90" cy="76" r="32" fill="#ffd9b0" stroke="#2a2418" strokeWidth="3" />
+      <path d="M 62 68 Q 62 42 90 40 Q 118 42 118 68 Q 110 54 90 52 Q 70 54 62 68 Z" fill="#2a2418" />
+      <circle cx="80" cy="76" r="3" fill="#2a2418" />
+      <circle cx="100" cy="76" r="3" fill="#2a2418" />
+      <path d="M 82 88 Q 90 95 98 88" stroke="#2a2418" strokeWidth="2.5" fill="none" />
+      <rect x="20" y="100" width="44" height="16" rx="8" fill="#4d6d99" stroke="#2a2418" strokeWidth="3" />
+      <rect x="116" y="100" width="44" height="16" rx="8" fill="#4d6d99" stroke="#2a2418" strokeWidth="3" />
+      <rect x="24" y="116" width="36" height="24" rx="4" fill="#2a2418" stroke="#2a2418" strokeWidth="2" />
+      <rect x="26" y="118" width="32" height="18" rx="2" fill="#bce3ef" />
+      <line x1="29" y1="122" x2="48" y2="122" stroke="#2a2418" strokeWidth="2" strokeLinecap="round" />
+      <line x1="29" y1="127" x2="44" y2="127" stroke="#4d8836" strokeWidth="2" strokeLinecap="round" />
+      <line x1="29" y1="132" x2="40" y2="132" stroke="#c94a3a" strokeWidth="2" strokeLinecap="round" />
+      <rect x="68" y="178" width="18" height="36" rx="4" fill="#2a2418" stroke="#2a2418" strokeWidth="2" />
+      <rect x="94" y="178" width="18" height="36" rx="4" fill="#2a2418" stroke="#2a2418" strokeWidth="2" />
+    </svg>
+  )
+}
+
+/* Woolly — classic white sheep, right-facing */
+function WoollyShape() {
+  return (
+    <svg width="120" height="94" viewBox="0 0 120 94" aria-hidden="true">
+      <circle cx="50" cy="46" r="24" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="30" cy="52" r="17" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="70" cy="52" r="17" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="36" cy="33" r="15" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="64" cy="33" r="15" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="50" cy="26" r="13" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <ellipse cx="88" cy="54" rx="15" ry="13" fill="#3a3024" stroke="#2a2418" strokeWidth="2.5"/>
+      <ellipse cx="83" cy="50" rx="3.5" ry="4" fill="#fbf3df"/>
+      <ellipse cx="93" cy="50" rx="3.5" ry="4" fill="#fbf3df"/>
+      <circle cx="84" cy="51" r="1.8" fill="#2a2418"/>
+      <circle cx="94" cy="51" r="1.8" fill="#2a2418"/>
+      <ellipse cx="88" cy="61" rx="7" ry="5" fill="#5b4a38"/>
+      <rect x="34" y="65" width="9" height="25" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+      <rect x="46" y="67" width="9" height="23" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+      <rect x="60" y="67" width="9" height="23" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+      <rect x="72" y="65" width="9" height="25" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+    </svg>
+  )
+}
+
+/* Pip — smaller adventurous sheep, right-facing */
+function PipShape() {
+  return (
+    <svg width="90" height="70" viewBox="0 0 120 94" aria-hidden="true">
+      <circle cx="50" cy="46" r="24" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="30" cy="52" r="17" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="70" cy="52" r="17" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="36" cy="33" r="15" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="64" cy="33" r="15" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <circle cx="50" cy="26" r="13" fill="#f6efe1" stroke="#2a2418" strokeWidth="2.5"/>
+      <ellipse cx="88" cy="54" rx="15" ry="13" fill="#3a3024" stroke="#2a2418" strokeWidth="2.5"/>
+      <ellipse cx="83" cy="50" rx="3.5" ry="4" fill="#fbf3df"/>
+      <ellipse cx="93" cy="50" rx="3.5" ry="4" fill="#fbf3df"/>
+      <circle cx="84" cy="51" r="1.8" fill="#2a2418"/>
+      <circle cx="94" cy="51" r="1.8" fill="#2a2418"/>
+      <ellipse cx="88" cy="61" rx="7" ry="5" fill="#5b4a38"/>
+      <rect x="34" y="65" width="9" height="25" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+      <rect x="46" y="67" width="9" height="23" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+      <rect x="60" y="67" width="9" height="23" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+      <rect x="72" y="65" width="9" height="25" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+    </svg>
+  )
+}
+
+/* Rosie — pink-tinted wool, left-facing (mirrored) */
+function RosieShape() {
+  return (
+    <svg width="110" height="88" viewBox="0 0 120 94" aria-hidden="true">
+      <g transform="scale(-1,1) translate(-120,0)">
+        <circle cx="50" cy="46" r="24" fill="#f6dfe8" stroke="#2a2418" strokeWidth="2.5"/>
+        <circle cx="30" cy="52" r="17" fill="#f6dfe8" stroke="#2a2418" strokeWidth="2.5"/>
+        <circle cx="70" cy="52" r="17" fill="#f6dfe8" stroke="#2a2418" strokeWidth="2.5"/>
+        <circle cx="36" cy="33" r="15" fill="#f6dfe8" stroke="#2a2418" strokeWidth="2.5"/>
+        <circle cx="64" cy="33" r="15" fill="#f6dfe8" stroke="#2a2418" strokeWidth="2.5"/>
+        <circle cx="50" cy="26" r="13" fill="#f6dfe8" stroke="#2a2418" strokeWidth="2.5"/>
+        <ellipse cx="88" cy="54" rx="15" ry="13" fill="#3a3024" stroke="#2a2418" strokeWidth="2.5"/>
+        <ellipse cx="83" cy="50" rx="3.5" ry="4" fill="#fbf3df"/>
+        <ellipse cx="93" cy="50" rx="3.5" ry="4" fill="#fbf3df"/>
+        <circle cx="84" cy="51" r="1.8" fill="#2a2418"/>
+        <circle cx="94" cy="51" r="1.8" fill="#2a2418"/>
+        <ellipse cx="88" cy="61" rx="7" ry="5" fill="#5b4a38"/>
+        <rect x="34" y="65" width="9" height="25" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+        <rect x="46" y="67" width="9" height="23" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+        <rect x="60" y="67" width="9" height="23" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+        <rect x="72" y="65" width="9" height="25" rx="4" fill="#3a3024" stroke="#2a2418" strokeWidth="2"/>
+      </g>
+    </svg>
   )
 }
 
@@ -136,24 +169,22 @@ export function Hero({ config, name }: { config: HeroConfig; name: string }) {
       <div className="max-w-[1280px] mx-auto h-full relative px-7 pt-12">
         {/* Copy */}
         <div className="relative z-[3] max-w-[640px]">
-          <span
-            className="font-[family-name:var(--font-caveat)] text-[32px] mb-2.5 -rotate-2 inline-block px-3.5 py-0.5 rounded-lg border-2 border-ink"
-            style={{ background: "var(--sun)" }}
-          >
+          <span className="font-hand text-[32px] mb-2.5 -rotate-2 inline-block px-3.5 py-0.5 rounded-lg border-2 border-ink bg-sun">
             {config.kicker}
           </span>
           <h1
-            className="font-[family-name:var(--font-fraunces)] font-black leading-[.9] text-ink mt-2"
+            className="font-display font-black leading-[.9] text-ink mt-2"
             style={{ fontSize: "clamp(56px, 8vw, 100px)", textShadow: "0 3px 0 rgba(0,0,0,.06)", maxWidth: 620 }}
           >
             {parseHeadline(config.headline)}
           </h1>
           <p
+            className="font-semibold text-[18px] text-ink inline-block mt-5 rounded-[14px] border-2 border-ink"
             style={{
-              fontWeight: 700, fontSize: 18, maxWidth: 480, margin: "20px 0 0",
+              maxWidth: 480,
               background: "color-mix(in oklab, var(--cream) 92%, transparent)",
-              padding: "14px 18px", borderRadius: 14, border: "2px solid var(--ink)",
-              boxShadow: "0 3px 0 var(--wool-shadow)", color: "var(--ink)", display: "inline-block",
+              padding: "14px 18px",
+              boxShadow: "0 3px 0 var(--wool-shadow)",
             }}
           >
             {config.subtext}
@@ -164,19 +195,33 @@ export function Hero({ config, name }: { config: HeroConfig; name: string }) {
           </div>
         </div>
 
-        {/* Barn */}
         <BarnSVG />
 
-        {/* Person character */}
-        <div
-          className="absolute group cursor-pointer"
-          style={{ right: 180, bottom: 40, transition: "transform .3s cubic-bezier(.2,1.3,.4,1)" }}
-        >
-          <SpeechBubble text={`Hi! I'm ${name.split(" ")[0]}.`} />
+        {/* Sheep characters — rendered before hills so feet appear in grass */}
+        <div className="char-hover absolute" style={{ left: 285, bottom: 68 }} aria-label="Woolly">
+          <div className="char-speech"><SpeechBubble rotate={-3}>Clean code! 🐑</SpeechBubble></div>
+          <WoollyShape />
+        </div>
+
+        <div className="char-hover absolute" style={{ left: 440, bottom: 63 }} aria-label="Pip">
+          <div className="char-speech"><SpeechBubble rotate={2} variant="sun">Ship it! 🚀</SpeechBubble></div>
+          <PipShape />
+        </div>
+
+        <div className="char-hover absolute" style={{ right: 350, bottom: 65 }} aria-label="Rosie">
+          <div className="char-speech"><SpeechBubble rotate={-2}>Good design ✨</SpeechBubble></div>
+          <RosieShape />
+        </div>
+
+        {/* Arun — person character */}
+        <div className="char-hover absolute" style={{ right: 180, bottom: 40 }}>
+          <div className="char-speech">
+            <SpeechBubble rotate={-4}>{`Hi! I'm ${name.split(" ")[0]}.`}</SpeechBubble>
+          </div>
           <PersonSVG />
         </div>
 
-        {/* Hills */}
+        {/* Hills — rendered after characters; covers feet for "standing in grass" effect */}
         <div className="absolute left-0 right-0 bottom-0 h-[360px] pointer-events-none" aria-hidden="true">
           <div className="absolute bottom-0 rounded-[50%_50%_0_0/70%_70%_0_0]"
             style={{ left: "-8%", width: "70%", height: 220, background: "var(--grass)" }} />
@@ -184,7 +229,7 @@ export function Hero({ config, name }: { config: HeroConfig; name: string }) {
             style={{ right: "-10%", width: "60%", height: 180, background: "color-mix(in oklab, var(--grass) 80%, black 6%)" }} />
           <div className="absolute"
             style={{
-              left: "30%", bottom: 110, width: 600, height: 60, borderRadius: 0,
+              left: "30%", bottom: 110, width: 600, height: 60,
               background: `repeating-linear-gradient(to right, transparent 0, transparent 40px, var(--wool-shadow) 40px, var(--wool-shadow) 46px, transparent 46px, transparent 80px),
                            linear-gradient(to bottom, transparent 0, transparent 18px, var(--wool-shadow) 18px, var(--wool-shadow) 26px, transparent 26px, transparent 38px, var(--wool-shadow) 38px, var(--wool-shadow) 46px, transparent 46px)`,
               opacity: 0.9,

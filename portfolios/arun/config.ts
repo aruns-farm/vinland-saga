@@ -1,24 +1,23 @@
 import type { PortfolioConfig } from "@/lib/types"
+import { talks } from "./talks"
 
 export const config: PortfolioConfig = {
   id:        "arun",
   subdomain: "arun",
   name:      "Arun Negi",
-  handle:    "@arunvn",
+  handle:    "@aruns-farm",
   location:  "New Delhi, India",
   bio:       "Builder of things. Fan of good design, weird anime arcs, and clean code. Currently at the farm.",
   links: {
-    github:  "https://github.com/arunvn",
+    github:  "https://github.com/aruns-farm",
     email:   "arun.vinland@gmail.com",
   },
 
   nav: {
     links: [
-      { label: "Home",     href: "#hero" },
-      { label: "Projects", href: "#projects" },
-      { label: "Work",     href: "#work" },
-      { label: "Skills",   href: "#skills" },
-      { label: "Writing",  href: "#writing" },
+      { label: "Home",    href: "/" },
+      { label: "Writing", href: "/blog" },
+      { label: "Watch",   href: "/watch" },
     ],
     cta: { label: "✉ Get in touch", href: "#contact" },
   },
@@ -151,24 +150,29 @@ export const config: PortfolioConfig = {
 
   writing: [
     {
+      slug:           "utility-classes-inline",
       title:          "Why I stopped writing utility classes inline",
       tag:            "Engineering",
       summary:        "A practical case for co-locating styles with logic, and what I learned after three years of Tailwind.",
       accentGradient: "linear-gradient(135deg, #bce3ef, #6aa84f)",
     },
     {
+      slug:           "quiet-joy-small-tools",
       title:          "The quiet joy of small tools",
       tag:            "Craft",
       summary:        "On building things that do one thing well, and why side projects are where I actually learn.",
       accentGradient: "linear-gradient(135deg, #ef9fb0, #c94a3a)",
     },
     {
+      slug:           "ketils-farm-multi-persona-web",
       title:          "Ketil's Farm and the multi-persona web",
       tag:            "Meta",
       summary:        "The idea behind this portfolio site, and why I think the subdomain-per-character model is genuinely interesting.",
       accentGradient: "linear-gradient(135deg, #f6c14b, #e69b2b)",
     },
   ],
+
+  talks,
 
   footer: {
     tagline: "A builder living at the farm. Making things on the internet since 2019.",
@@ -185,7 +189,7 @@ export const config: PortfolioConfig = {
         heading: "Connect",
         links: [
           { label: "Email",     href: "mailto:arun.vinland@gmail.com" },
-          { label: "GitHub",    href: "https://github.com/arunvn" },
+          { label: "GitHub",    href: "https://github.com/aruns-farm" },
           { label: "Writing",   href: "#writing" },
         ],
       },

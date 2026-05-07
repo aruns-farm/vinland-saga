@@ -112,3 +112,209 @@ h1, h2, h3, h4 {
 
 /* footer link hover */
 footer a:hover { color: var(--sun) !important; opacity: 1 !important; }
+
+/* ── Blog post: pull quote circle mark ── */
+.pullquote {
+  position: relative;
+  margin: 40px -16px;
+  padding: 36px 40px 32px;
+  background: var(--paper, #fffaec);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 0 5px 0 var(--wool-shadow);
+  transform: rotate(-0.5deg);
+}
+.pullquote::before {
+  content: "\201C";
+  position: absolute;
+  top: -28px; left: 24px;
+  width: 56px; height: 56px;
+  background: var(--barn); color: white;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  font-family: var(--font-fraunces, 'Fraunces'), Georgia, serif;
+  font-size: 56px; line-height: 1.05;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 6px;
+}
+
+/* ── Blog post: custom lists ── */
+.blog-ul { padding: 0 0 0 4px; margin: 0 0 24px; list-style: none; }
+.blog-ul li { padding: 6px 0 6px 32px; position: relative; font-size: 19px; line-height: 1.65; }
+.blog-ul li::before { content: "🐑"; position: absolute; left: 0; top: 6px; font-size: 16px; }
+
+.blog-ol { padding: 0; margin: 0 0 24px; counter-reset: woolnum; list-style: none; }
+.blog-ol li { counter-increment: woolnum; padding: 8px 0 8px 44px; position: relative; font-size: 19px; line-height: 1.65; }
+.blog-ol li::before {
+  content: counter(woolnum);
+  position: absolute; left: 0; top: 10px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--barn); color: white;
+  font-family: var(--font-fraunces, 'Fraunces'), Georgia, serif;
+  font-weight: 900; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--ink);
+}
+
+/* ── Cloud shapes (watch page title band) ── */
+.cloud {
+  background: white;
+  border-radius: 999px;
+  box-shadow: inset -4px -6px 0 rgba(0,0,0,.06);
+}
+/* Legacy alias */
+.watch-cloud {
+  position: absolute;
+  background: white;
+  border-radius: 999px;
+  box-shadow: inset -4px -6px 0 rgba(0,0,0,.06);
+}
+.watch-cloud::before, .watch-cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+/* ── Watch player: big play button triangle ── */
+.big-play-btn::after {
+  content: "";
+  width: 0; height: 0;
+  border-left: 32px solid var(--ink);
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  margin-left: 8px;
+  display: block;
+}
+
+/* ── Watch player: control play/pause buttons ── */
+.ctl-play::after {
+  content: "";
+  width: 0; height: 0;
+  border-left: 14px solid currentColor;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  margin-left: 4px;
+  display: block;
+}
+.ctl-pause::after {
+  content: "";
+  display: block;
+  width: 10px; height: 14px;
+  border-left: 4px solid currentColor;
+  border-right: 4px solid currentColor;
+}
+
+/* ── Watch: yt-card mini play button ── */
+.yt-play-mini::after {
+  content: "";
+  width: 0; height: 0;
+  border-left: 16px solid white;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  margin-left: 4px;
+  display: block;
+}
+
+/* ── Under Construction banner ── */
+.uc-banner {
+  position: fixed;
+  left: 0; right: 0; top: 0;
+  z-index: 9000;
+  background: var(--sun);
+  color: var(--ink);
+  border-bottom: 3px solid var(--ink);
+  box-shadow: 0 6px 0 var(--sun-2), 0 14px 24px -10px rgba(42,36,24,.25);
+  transform: translateY(-100%);
+  transition: transform .55s cubic-bezier(.22,1,.36,1);
+  padding: 18px 28px 22px;
+  overflow: hidden;
+}
+.uc-banner.show { transform: translateY(0); }
+.uc-banner::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -16px;
+  height: 16px;
+  background:
+    linear-gradient(135deg, var(--sun) 50%, transparent 50%) 0 0/16px 16px repeat-x,
+    linear-gradient(225deg, var(--sun) 50%, transparent 50%) 0 0/16px 16px repeat-x;
+  filter: drop-shadow(0 3px 0 var(--sun-2));
+}
+.uc-stripes {
+  position: absolute;
+  left: 0; right: 0; bottom: -22px;
+  height: 6px;
+  background: repeating-linear-gradient(45deg, var(--ink) 0 14px, var(--sun) 14px 28px);
+  background-size: 28px 28px;
+  animation: ucSlide 3.5s linear infinite;
+  z-index: -1;
+}
+@keyframes ucSlide {
+  from { background-position: 0 0; }
+  to   { background-position: 56px 0; }
+}
+.uc-hardhat {
+  position: absolute;
+  top: -2px; left: 14px;
+  width: 60px; height: 26px;
+  background: var(--barn);
+  border: 2.5px solid var(--ink);
+  border-radius: 30px 30px 4px 4px;
+  z-index: 3;
+}
+.uc-hardhat::before {
+  content: ""; position: absolute;
+  bottom: -6px; left: -8px; right: -8px;
+  height: 8px;
+  background: var(--barn-2);
+  border: 2.5px solid var(--ink);
+  border-radius: 4px;
+}
+.uc-hardhat::after {
+  content: ""; position: absolute;
+  top: 4px; left: 26px;
+  width: 8px; height: 14px;
+  background: var(--cream);
+  border-radius: 2px;
+}
+@keyframes ucWiggle {
+  0%, 100% { transform: rotate(-6deg) translateY(0); }
+  50%       { transform: rotate(2deg) translateY(-3px); }
+}
+@keyframes ucBlink {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--barn) 70%, transparent); }
+  50%      { box-shadow: 0 0 0 6px color-mix(in oklab, var(--barn) 0%, transparent); }
+}
+
+/* ── Blog more-card hover (CSS-only, no JS event handlers) ── */
+.more-card-hover {
+  transition: transform .15s ease;
+}
+.more-card-hover:hover {
+  transform: translate(-2px, -3px);
+  box-shadow: 0 8px 0 var(--wool-shadow) !important;
+}
+
+/* ── Hero sheep / character hover ── */
+.char-hover {
+  cursor: pointer;
+  transition: transform .3s cubic-bezier(.2,1.3,.4,1);
+}
+.char-hover:hover {
+  transform: translateY(-14px) rotate(-4deg) scale(1.05);
+}
+.char-speech {
+  opacity: 0;
+  transition: opacity .2s ease;
+  pointer-events: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 2;
+}
+.char-hover:hover .char-speech {
+  opacity: 1;
+}

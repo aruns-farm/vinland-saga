@@ -17,20 +17,13 @@ function TickerItems({ items }: { items: TickerItem[] }) {
 export function Ticker({ items }: { items: TickerItem[] }) {
   return (
     <div
-      className="overflow-hidden border-t-[3px] border-b-[3px] border-ink py-3.5"
-      style={{ background: "var(--ink)", color: "var(--cream)" }}
+      className="overflow-hidden border-t-[3px] border-b-[3px] border-ink py-3.5 bg-ink text-cream"
       aria-hidden="true"
     >
       <div
-        className="inline-flex gap-12 pl-12 whitespace-nowrap"
-        style={{
-          fontFamily: "var(--font-fraunces, 'Fraunces', serif)",
-          fontWeight: 800,
-          fontSize: 22,
-          animation: "ticker 40s linear infinite",
-        }}
+        className="inline-flex gap-12 pl-12 whitespace-nowrap font-display font-black text-[22px]"
+        style={{ animation: "ticker 40s linear infinite" }}
       >
-        {/* doubled for seamless loop */}
         <TickerItems items={items} />
         <TickerItems items={items} />
       </div>
