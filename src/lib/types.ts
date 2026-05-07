@@ -138,7 +138,7 @@ export interface PortfolioConfig {
   subdomain: string
   name:      string
   handle:    string
-  location:  string
+  location?: string
   bio:       string
   links:     SocialLinks
   hero:      HeroConfig

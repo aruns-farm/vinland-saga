@@ -1,6 +1,7 @@
 import type { HeroConfig } from "@/lib/types"
 import { Button } from "@/components/ui/Button"
 import { SpeechBubble } from "@/components/ui/SpeechBubble"
+import { cn } from "@/lib/cn"
 
 function parseHeadline(text: string) {
   const parts = text.split(/(\*[^*]+\*)/)
@@ -14,10 +15,8 @@ function parseHeadline(text: string) {
 function Sun() {
   return (
     <div
-      className="absolute rounded-full"
+      className="absolute rounded-full right-[120px] top-[60px] w-[130px] h-[130px] bg-sun"
       style={{
-        right: 120, top: 60, width: 130, height: 130,
-        background: "var(--sun)",
         boxShadow: "0 0 0 14px color-mix(in oklab, var(--sun) 40%, transparent), 0 0 0 28px color-mix(in oklab, var(--sun) 20%, transparent)",
         animation: "spin 40s linear infinite",
       }}
@@ -26,11 +25,11 @@ function Sun() {
   )
 }
 
-function Cloud({ style }: { style: React.CSSProperties }) {
+function Cloud({ className, style }: { className: string; style?: React.CSSProperties }) {
   return (
     <div
-      className="absolute rounded-[999px]"
-      style={{ background: "white", boxShadow: "inset -4px -6px 0 rgba(0,0,0,.06)", ...style }}
+      className={cn("absolute rounded-pill bg-white", className)}
+      style={{ boxShadow: "inset -4px -6px 0 rgba(0,0,0,.06)", ...style }}
       aria-hidden="true"
     />
   )
@@ -38,7 +37,7 @@ function Cloud({ style }: { style: React.CSSProperties }) {
 
 function BarnSVG() {
   return (
-    <svg className="absolute" style={{ left: 48, bottom: 80, width: 220, height: 220 }} viewBox="0 0 220 220" aria-hidden="true">
+    <svg className="absolute left-[48px] bottom-[80px] w-[220px] h-[220px]" viewBox="0 0 220 220" aria-hidden="true">
       <polygon points="20,90 110,20 200,90" fill="#c94a3a" stroke="#2a2418" strokeWidth="4" />
       <polygon points="25,90 110,28 195,90" fill="none" stroke="#a23a2c" strokeWidth="2" />
       <rect x="30" y="90" width="160" height="110" fill="#e16451" stroke="#2a2418" strokeWidth="4" />
@@ -156,14 +155,14 @@ export function Hero({ config, name }: { config: HeroConfig; name: string }) {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden min-h-[480px] sm:h-[640px]"
+      className="relative overflow-hidden min-h-[520px] sm:h-[760px]"
       style={{
         background: "linear-gradient(to bottom, var(--sky) 0%, var(--sky-2) 55%, var(--grass) 55%, var(--grass-2) 100%)",
       }}
     >
       <div className="hidden sm:block"><Sun /></div>
-      <Cloud style={{ top: 90, left: -40, width: 180, height: 44, animation: "drift 60s linear infinite" }} />
-      <Cloud style={{ top: 40, left: 380, width: 120, height: 32, animation: "drift 80s linear infinite reverse" }} />
+      <Cloud className="top-[90px] -left-[40px] w-[180px] h-[44px]" style={{ animation: "drift 60s linear infinite" }} />
+      <Cloud className="top-[40px] left-[380px] w-[120px] h-[32px]" style={{ animation: "drift 80s linear infinite reverse" }} />
 
       <div className="max-w-[1280px] mx-auto sm:h-full relative px-7 pt-12 pb-20 sm:pb-0">
         {/* Copy */}
@@ -172,18 +171,14 @@ export function Hero({ config, name }: { config: HeroConfig; name: string }) {
             {config.kicker}
           </span>
           <h1
-            className="font-display font-black leading-[.9] text-ink mt-2"
-            style={{ fontSize: "clamp(44px, 8vw, 100px)", textShadow: "0 3px 0 rgba(0,0,0,.06)", maxWidth: 620 }}
+            className="font-display font-black leading-[.9] text-ink mt-2 text-[clamp(44px,8vw,100px)] max-w-[620px]"
+            style={{ textShadow: "0 3px 0 rgba(0,0,0,.06)" }}
           >
             {parseHeadline(config.headline)}
           </h1>
           <p
-            className="font-semibold text-[18px] text-ink inline-block mt-5 rounded-[14px] border-2 border-ink shadow-sm"
-            style={{
-              maxWidth: 480,
-              background: "color-mix(in oklab, var(--cream) 92%, transparent)",
-              padding: "14px 18px",
-            }}
+            className="font-semibold text-[18px] text-ink inline-block mt-5 rounded-[14px] border-2 border-ink shadow-sm max-w-[480px] px-[18px] py-[14px]"
+            style={{ background: "color-mix(in oklab, var(--cream) 92%, transparent)" }}
           >
             {config.subtext}
           </p>
@@ -198,23 +193,23 @@ export function Hero({ config, name }: { config: HeroConfig; name: string }) {
         </div>
 
         {/* Sheep characters — rendered before hills so feet appear in grass */}
-        <div className="hidden sm:block char-hover absolute" style={{ left: 285, bottom: 68 }} aria-label="Woolly">
+        <div className="hidden sm:block char-hover absolute left-[285px] bottom-[68px]" aria-label="Woolly">
           <div className="char-speech"><SpeechBubble rotate={-3}>Clean code! 🐑</SpeechBubble></div>
           <WoollyShape />
         </div>
 
-        <div className="hidden sm:block char-hover absolute" style={{ left: 440, bottom: 63 }} aria-label="Pip">
+        <div className="hidden sm:block char-hover absolute left-[440px] bottom-[63px]" aria-label="Pip">
           <div className="char-speech"><SpeechBubble rotate={2} variant="sun">Ship it! 🚀</SpeechBubble></div>
           <PipShape />
         </div>
 
-        <div className="hidden sm:block char-hover absolute" style={{ right: 350, bottom: 65 }} aria-label="Rosie">
+        <div className="hidden sm:block char-hover absolute right-[350px] bottom-[65px]" aria-label="Rosie">
           <div className="char-speech"><SpeechBubble rotate={-2}>Good design ✨</SpeechBubble></div>
           <RosieShape />
         </div>
 
         {/* Arun — person character */}
-        <div className="hidden sm:block char-hover absolute" style={{ right: 180, bottom: 40 }}>
+        <div className="hidden sm:block char-hover absolute right-[180px] bottom-[40px]">
           <div className="char-speech">
             <SpeechBubble rotate={-4}>{`Hi! I'm ${name.split(" ")[0]}.`}</SpeechBubble>
           </div>
@@ -223,16 +218,13 @@ export function Hero({ config, name }: { config: HeroConfig; name: string }) {
 
         {/* Hills — rendered after characters; covers feet for "standing in grass" effect */}
         <div className="hidden sm:block absolute left-0 right-0 bottom-0 h-[360px] pointer-events-none" aria-hidden="true">
-          <div className="absolute bottom-0 rounded-[50%_50%_0_0/70%_70%_0_0] bg-grass"
-            style={{ left: "-8%", width: "70%", height: 220 }} />
-          <div className="absolute bottom-0 rounded-[50%_50%_0_0/70%_70%_0_0]"
-            style={{ right: "-10%", width: "60%", height: 180, background: "color-mix(in oklab, var(--grass) 80%, black 6%)" }} />
-          <div className="absolute"
+          <div className="absolute bottom-0 rounded-[50%_50%_0_0/70%_70%_0_0] bg-grass left-[-8%] w-[70%] h-[220px]" />
+          <div className="absolute bottom-0 rounded-[50%_50%_0_0/70%_70%_0_0] right-[-10%] w-[60%] h-[180px]"
+            style={{ background: "color-mix(in oklab, var(--grass) 80%, black 6%)" }} />
+          <div className="absolute left-[30%] bottom-[110px] w-[600px] h-[60px] opacity-90"
             style={{
-              left: "30%", bottom: 110, width: 600, height: 60,
               background: `repeating-linear-gradient(to right, transparent 0, transparent 40px, var(--wool-shadow) 40px, var(--wool-shadow) 46px, transparent 46px, transparent 80px),
                            linear-gradient(to bottom, transparent 0, transparent 18px, var(--wool-shadow) 18px, var(--wool-shadow) 26px, transparent 26px, transparent 38px, var(--wool-shadow) 38px, var(--wool-shadow) 46px, transparent 46px)`,
-              opacity: 0.9,
             }}
           />
         </div>

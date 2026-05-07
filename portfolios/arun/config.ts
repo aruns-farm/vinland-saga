@@ -6,7 +6,6 @@ export const config: PortfolioConfig = {
   subdomain: "arun",
   name:      "Arun Negi",
   handle:    "@aruns-farm",
-  location:  "New Delhi, India",
   bio:       "Builder of things. Fan of good design, weird anime arcs, and clean code. Currently at the farm.",
   links: {
     github:  "https://github.com/aruns-farm",
@@ -24,7 +23,7 @@ export const config: PortfolioConfig = {
 
   hero: {
     kicker:      "Hello there! 👋",
-    headline:    "I build things *people* love to use.",
+    headline:    "The exit plan was always a *farm*.",
     subtext:     "Full-stack developer with a taste for thoughtful interfaces, well-structured systems, and the occasional absurd side-project. Welcome to the farm.",
     primaryCta:  { label: "▶ See my work",  href: "#projects" },
     secondaryCta:{ label: "About me",       href: "#skills" },
@@ -36,7 +35,6 @@ export const config: PortfolioConfig = {
     { emoji: "🏆", em: "OPEN SOURCE", text: "— contributor" },
     { emoji: "🎨", text: "Design systems & component libraries" },
     { emoji: "🐑", em: "AVAILABLE",   text: "for interesting projects" },
-    { emoji: "📍", text: "New Delhi, India" },
   ],
 
   projects: [

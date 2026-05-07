@@ -468,7 +468,7 @@ export default function WatchClient({ talk, otherTalks }: Props) {
             </div>
           </div>
           <p className="font-semibold text-[14px] leading-[1.5] mb-4" style={{ color: "color-mix(in oklab, var(--ink) 70%, transparent)" }}>
-            Conference talks on TypeScript, design systems, and building things that last. New Delhi based.
+            Conference talks on TypeScript, design systems, and building things that last.
           </p>
           <div className="grid grid-cols-3 gap-2 mb-4">
             {[["3", "Episodes"], ["2", "Events"], ["450+", "Attendees"]].map(([v, l]) => (
