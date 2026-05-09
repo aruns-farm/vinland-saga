@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og"
 
-export const alt = "Ketil's Farm — a portfolio for every character."
+export const alt = "Arun Negi — a builder living at the farm. currently at the ketil's farm."
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -133,7 +133,7 @@ export default async function Image() {
               display: "flex",
             }}
           >
-            Ketil's Farm
+            Arun Negi
           </div>
 
           {/* Handwritten subtitle */}
@@ -148,7 +148,7 @@ export default async function Image() {
               display: "flex",
             }}
           >
-            a portfolio for every character.
+            builder of things. currently at the farm.
           </div>
         </div>
 
@@ -172,7 +172,7 @@ export default async function Image() {
             letterSpacing: 0.5,
           }}
         >
-          ketils.farm
+          arun.ketils.farm
         </div>
       </div>
     ),
