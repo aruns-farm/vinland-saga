@@ -26,8 +26,21 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ketils.farm"),
   title: "Ketil's Farm",
   description: "A portfolio for every character.",
+  openGraph: {
+    title: "Ketil's Farm",
+    description: "A portfolio for every character.",
+    url: "https://ketils.farm",
+    siteName: "Ketil's Farm",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ketil's Farm",
+    description: "A portfolio for every character.",
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
