@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og"
 
-export const alt = "Arun Negi — a builder living at the farm. currently at the ketil's farm."
+export const alt = "Arun Negi — a builder living at Ketil's farm."
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
