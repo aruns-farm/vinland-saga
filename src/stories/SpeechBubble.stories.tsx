@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SpeechBubble, type SpeechBubbleVariant } from "@/components/ui/SpeechBubble"
 
 const meta: Meta<typeof SpeechBubble> = {

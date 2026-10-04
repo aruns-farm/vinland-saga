@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, type ButtonVariant, type ButtonSize } from "@/components/ui/Button"
 
 const meta: Meta<typeof Button> = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
 
 const tokens = [
   { name: "ink",         hex: "#2a2418", tailwind: "bg-ink",         label: "Ink — body text, borders" },

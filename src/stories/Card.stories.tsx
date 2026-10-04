@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Card, PhotoCard, type CardVariant } from "@/components/ui/Card"
 
 const meta: Meta<typeof Card> = {

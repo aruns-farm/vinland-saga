@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input, Textarea, Field, Checkbox } from "@/components/ui/Input"
 
 /* Use a generic wrapper component for the meta since we're showing multiple */

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
 import { LogoMark } from "@/components/ui/LogoMark"
 
 const meta: Meta<typeof LogoMark> = {
