@@ -1,0 +1,31 @@
+[
+  { "id": "ddia", "title": "Designing Data-Intensive Applications", "author": "Kleppmann", "shelf": "SYS", "status": "reading", "onHome": true, "progress": "ch. [N] of 12" },
+  { "id": "database-internals", "title": "Database Internals", "author": "Petrov", "shelf": "SYS", "status": "finished", "onHome": true },
+  { "id": "ostep", "title": "Operating Systems: Three Easy Pieces", "author": "Arpaci-Dusseau", "shelf": "SYS", "status": "finished", "onHome": true },
+  { "id": "art-of-postgresql", "title": "The Art of PostgreSQL", "author": "Fontaine", "shelf": "SYS", "status": "finished" },
+  { "id": "clrs", "title": "Introduction to Algorithms", "author": "Cormen et al.", "shelf": "SYS", "status": "finished" },
+  { "id": "understanding-distributed-systems", "title": "Understanding Distributed Systems", "author": "Vitillo", "shelf": "SYS", "status": "finished", "onHome": true },
+  { "id": "sre", "title": "Site Reliability Engineering", "author": "Beyer et al.", "shelf": "SYS", "status": "finished" },
+  { "id": "networking", "title": "Computer Networking: A Top-Down Approach", "author": "Kurose & Ross", "shelf": "SYS", "status": "finished" },
+
+  { "id": "rust-book", "title": "The Rust Programming Language", "author": "Klabnik & Nichols", "shelf": "LNG", "status": "finished", "onHome": true },
+  { "id": "programming-rust", "title": "Programming Rust", "author": "Blandy & Orendorff", "shelf": "LNG", "status": "finished" },
+  { "id": "apsd", "title": "A Philosophy of Software Design", "author": "Ousterhout", "shelf": "LNG", "status": "finished", "onHome": true },
+  { "id": "mythical-man-month", "title": "The Mythical Man-Month", "author": "Brooks", "shelf": "LNG", "status": "finished" },
+  { "id": "sicp", "title": "Structure and Interpretation of Computer Programs", "author": "Abelson & Sussman", "shelf": "LNG", "status": "abandoned" },
+  { "id": "pragmatic-programmer", "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "shelf": "LNG", "status": "finished" },
+  { "id": "rust-for-rustaceans", "title": "Rust for Rustaceans", "author": "Gjengset", "shelf": "LNG", "status": "finished", "onHome": true },
+  { "id": "refactoring", "title": "Refactoring", "author": "Fowler", "shelf": "LNG", "status": "finished" },
+
+  { "id": "code", "title": "Code", "author": "Petzold", "shelf": "IDE", "status": "finished", "onHome": true },
+  { "id": "structure-of-scientific-revolutions", "title": "The Structure of Scientific Revolutions", "author": "Kuhn", "shelf": "IDE", "status": "finished" },
+  { "id": "thinking-fast-and-slow", "title": "Thinking, Fast and Slow", "author": "Kahneman", "shelf": "IDE", "status": "finished" },
+  { "id": "art-of-doing-science", "title": "The Art of Doing Science and Engineering", "author": "Hamming", "shelf": "IDE", "status": "finished", "onHome": true },
+  { "id": "godels-proof", "title": "Gödel's Proof", "author": "Nagel & Newman", "shelf": "IDE", "status": "finished" },
+  { "id": "feynman", "title": "Surely You're Joking, Mr. Feynman!", "author": "Feynman", "shelf": "IDE", "status": "finished" },
+  { "id": "beginning-of-infinity", "title": "The Beginning of Infinity", "author": "Deutsch", "shelf": "IDE", "status": "finished" },
+
+  { "id": "csapp", "title": "Computer Systems: A Programmer's Perspective", "author": "Bryant & O'Hallaron", "shelf": "NXT", "status": "wishlist" },
+  { "id": "crafting-interpreters", "title": "Crafting Interpreters", "author": "Nystrom", "shelf": "NXT", "status": "wishlist" },
+  { "id": "geb", "title": "Gödel, Escher, Bach", "author": "Hofstadter", "shelf": "NXT", "status": "wishlist" }
+]

@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Seal from '../components/Seal.astro';
+import { about, now, offClock, links, site } from '../data/site';
+import { fmtDate } from '../lib/util';
+---
+<Base title="About" description={about.headline} footer={`${site.name} · ${about.location}`}>
+  <section class="about-hero">
+    <div class="portrait">
+      <div class="portrait__frame">{about.portrait ? <img src={about.portrait} alt={`Portrait of ${site.name}`} /> : '[Portrait]'}</div>
+      <span class="mono muted" style="font-size:11px">{about.location}</span>
+    </div>
+    <div class="about-text">
+      <Seal size="md" />
+      <h1>{about.headline}</h1>
+      {about.paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+
+  <div class="cols" style="padding-top: 64px">
+    <section class="main">
+      <div class="sec-head"><h2 style="display:flex;align-items:center;gap:10px"><span class="dot"></span>Now</h2></div>
+      {now.items.map((n) => <div class="kv"><span class="kv__k">{n.k}</span><span class="kv__v">{n.v}</span></div>)}
+      <p class="mono" style="margin-top:14px;font-size:11px;color:var(--faint)">updated {fmtDate(new Date(now.updated))}</p>
+
+      <div class="sec-head" style="margin-top:56px"><h2>Off the clock</h2></div>
+      {offClock.map((o) => <div class="kv"><span class="kv__k">{o.k}</span><span class="kv__v">{o.v}</span></div>)}
+    </section>
+
+    <aside class="side">
+      <section class="side-block">
+        <h2>Elsewhere</h2>
+        <div>{links.map((l) => <a class="link-row" href={l.href}><span>{l.k}</span><span>{l.v}</span></a>)}</div>
+      </section>
+      <section class="side-block" style="font-size:16px;color:var(--ink-2)">
+        <h2 style="color:var(--ink)">Colophon</h2>
+        <p>Set in Source Serif 4 and JetBrains Mono. The red seal is my name in katakana, アルン; 読了 at the end of an essay means “finished reading.”</p>
+        <p>Built with Astro. No trackers, no ads, no pop-ups.</p>
+      </section>
+    </aside>
+  </div>
+</Base>

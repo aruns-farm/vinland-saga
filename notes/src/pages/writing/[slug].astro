@@ -1,0 +1,203 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Seal from '../../components/Seal.astro';
+import { getEssays, fmtDate, toSeconds } from '../../lib/util';
+
+export async function getStaticPaths() {
+  const essays = await getEssays();
+  return essays.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, newer: essays[i - 1], older: essays[i + 1] },
+  }));
+}
+
+const { entry, newer, older } = Astro.props;
+const d = entry.data;
+const { Content, headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2 && h.slug !== 'footnote-label');
+const video = d.media === 'video' ? d.video : undefined;
+const total = video ? toSeconds(video.duration) : 0;
+const chapters = (video?.chapters ?? []).map((c, i) => ({ ...c, n: i + 1, sec: toSeconds(c.at), pct: total ? (toSeconds(c.at) / total) * 100 : 0 }));
+const showLearn = d.media !== 'video' && d.learn?.length;
+---
+<Base title={d.title} description={d.dek}>
+  <div slot="before" class="reading-progress" data-progress aria-hidden="true"></div>
+
+  <section class="essay-hero">
+    <div class="eyebrow accent">Essay {d.number} · {d.tags.join(' · ')}</div>
+    <h1>{d.title}</h1>
+    <p class="dek">{d.dek}</p>
+    <div class="meta">
+      <span>Published {fmtDate(d.date)}</span>
+      {d.updated && <span>Revised {fmtDate(d.updated)}</span>}
+      <span>{d.minutes} min read</span>
+      <span>Status: {d.status}</span>
+    </div>
+  </section>
+
+  {toc.length > 0 && (
+    <details class="toc-mobile box">
+      <summary><span>Contents · {toc.length} sections</span><span aria-hidden="true">+</span></summary>
+      <nav aria-label="Contents">{toc.map((h, i) => <a href={`#${h.slug}`}>{i + 1}  {h.text}</a>)}</nav>
+    </details>
+  )}
+
+  {d.media === 'image' && d.cover && (
+    <figure class="figure">
+      <div class="figure__frame">{d.cover.src ? <img src={d.cover.src} alt={d.cover.alt} /> : '[Cover image or diagram · 2100 × 900]'}</div>
+      <figcaption><span>Fig. 0</span><span>{d.cover.caption}</span></figcaption>
+    </figure>
+  )}
+
+  {showLearn && (
+    <section class="learn box" aria-label="In this essay">
+      <span class="eyebrow accent" style="font-size:11px">In this essay, you'll learn</span>
+      <div class="learn__grid">
+        {d.learn!.map((l, i) => <a href={l.anchor ? `#${l.anchor}` : undefined}><span>§{i + 1}</span><span>{l.text}</span></a>)}
+      </div>
+    </section>
+  )}
+
+  {video && (
+    <section id="video" class="video box" aria-label="Companion video" data-video data-total={total}>
+      <div class="video__player">
+        <div class="video__screen">
+          {video.src ? (
+            <video src={video.src} poster={video.poster} controls preload="metadata" playsinline data-media></video>
+          ) : (
+            <>
+              <div class="video__top"><span>Companion video</span><span data-chapter-count>Chapter 1 of {chapters.length}</span></div>
+              <div class="video__center">
+                <button type="button" aria-label="Play video" data-fake-play>
+                  <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 L20 12 L7 20 Z" fill="currentColor" /></svg>
+                </button>
+                <span class="video__title" data-chapter-title>{chapters[0]?.title}</span>
+                <span class="mono" style="font-size:11px;color:var(--on-screen-faint)">[Recording coming — add video.src to the essay]</span>
+              </div>
+              <div class="video__bottom">
+                <div class="video__track">
+                  <div class="video__fill" data-fill></div>
+                  {chapters.map((c) => <span class="video__tick" style={`left:${c.pct}%`}></span>)}
+                </div>
+                <div class="video__times"><span data-time>{chapters[0]?.at}</span><span>{video.duration}</span></div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+      <div class="video__side">
+        <span class="eyebrow accent" style="font-size:11px">Watch alongside</span>
+        <p style="font-size:16px;line-height:1.55;color:var(--ink-2)">This essay has a companion video. Each chapter maps to a section of the text — watch, read, or switch between them.</p>
+        <div class="chap-list" role="list">
+          {chapters.map((c, i) => (
+            <button class="chap" type="button" role="listitem" data-chap={i} data-sec={c.sec} data-anchor={c.anchor} data-title={c.title} data-at={c.at} data-pct={c.pct}
+              aria-current={i === 0 ? 'true' : 'false'} aria-label={`Play chapter ${c.n}: ${c.title} at ${c.at}`}>
+              <span>§{c.n}</span><span>{c.title}</span><span>{c.at}</span>
+            </button>
+          ))}
+        </div>
+        <a class="link" href={`#${chapters[0]?.anchor}`} data-read-link>Read §1 in the text ↓</a>
+      </div>
+    </section>
+  )}
+
+  <div class="cols" style="padding-bottom: 40px">
+    <article class="main prose" data-prose>
+      <Content />
+      <div class="end-mark">
+        <Seal size="end" />
+        <span class="mono muted" style="font-size:12px">end of essay · thanks for reading it to the end</span>
+      </div>
+    </article>
+
+    <aside class="side essay-side m-hide">
+      {toc.length > 0 && (
+        <nav class="toc" aria-label="Contents">
+          <span class="h">Contents</span>
+          {toc.map((h, i) => <a href={`#${h.slug}`}>{i + 1}  {h.text}</a>)}
+        </nav>
+      )}
+      <div class="side-note">
+        <span>subject</span>
+        <a href={`/writing/?subject=${encodeURIComponent(d.subject)}`}>{d.subject} — more essays →</a>
+      </div>
+    </aside>
+  </div>
+
+  <nav class="meta" style="justify-content:space-between;font-size:13px" aria-label="More essays">
+    {older ? <a href={`/writing/${older.id}/`}>← Essay {older.data.number}</a> : <span></span>}
+    <a href="/writing/">All essays</a>
+    {newer ? <a href={`/writing/${newer.id}/`}>Essay {newer.data.number} →</a> : <span></span>}
+  </nav>
+</Base>
+
+<script>
+  function initEssay() {
+    // reading progress
+    const bar = document.querySelector<HTMLElement>('[data-progress]');
+    if (bar) {
+      let raf = 0;
+      const update = () => {
+        raf = 0;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = `${max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0}%`;
+      };
+      const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('astro:before-swap', () => window.removeEventListener('scroll', onScroll), { once: true });
+      update();
+    }
+
+    // video ⇄ text sync
+    const box = document.querySelector<HTMLElement>('[data-video]');
+    if (!box) return;
+    const chaps = [...box.querySelectorAll<HTMLButtonElement>('[data-chap]')];
+    const media = box.querySelector<HTMLVideoElement>('[data-media]');
+    const fill = box.querySelector<HTMLElement>('[data-fill]');
+    const title = box.querySelector<HTMLElement>('[data-chapter-title]');
+    const time = box.querySelector<HTMLElement>('[data-time]');
+    const count = box.querySelector<HTMLElement>('[data-chapter-count]');
+    const readLink = box.querySelector<HTMLAnchorElement>('[data-read-link]');
+    const fake = box.querySelector<HTMLButtonElement>('[data-fake-play]');
+    let current = -1;
+
+    // ▶ timestamp chips next to the matching section headings
+    const headingChips: (HTMLButtonElement | null)[] = chaps.map((c) => {
+      const h = document.getElementById(c.dataset.anchor || '');
+      if (!h) return null;
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip-time';
+      chip.textContent = `▶ ${c.dataset.at}`;
+      chip.setAttribute('aria-label', `Watch this section in the video, at ${c.dataset.at}`);
+      chip.addEventListener('click', () => { select(Number(c.dataset.chap), true); box.scrollIntoView({ behavior: 'smooth' }); });
+      h.append(chip);
+      return chip;
+    });
+
+    function select(i: number, seek: boolean) {
+      if (i === current) return;
+      current = i;
+      const c = chaps[i];
+      chaps.forEach((b, j) => b.setAttribute('aria-current', String(j === i)));
+      headingChips.forEach((chip, j) => chip?.setAttribute('aria-current', String(j === i)));
+      if (title) title.textContent = c.dataset.title || '';
+      if (time) time.textContent = c.dataset.at || '';
+      if (count) count.textContent = `Chapter ${i + 1} of ${chaps.length}`;
+      if (fill) fill.style.width = `${Math.max(1, Number(c.dataset.pct))}%`;
+      if (readLink) { readLink.href = `#${c.dataset.anchor}`; readLink.textContent = `Read §${i + 1} in the text ↓`; }
+      if (seek && media) { media.currentTime = Number(c.dataset.sec); media.play().catch(() => {}); }
+    }
+    chaps.forEach((b, i) => b.addEventListener('click', () => select(i, true)));
+    media?.addEventListener('timeupdate', () => {
+      const t = media.currentTime;
+      let i = 0;
+      chaps.forEach((c, j) => { if (t >= Number(c.dataset.sec)) i = j; });
+      select(i, false);
+    });
+    fake?.addEventListener('click', () => fake.toggleAttribute('data-on'));
+    select(0, false);
+  }
+  document.addEventListener('astro:page-load', initEssay);
+</script>

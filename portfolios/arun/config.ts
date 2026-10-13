@@ -9,13 +9,13 @@ export const config: PortfolioConfig = {
   bio:       "Builder of things. Fan of good design, weird anime arcs, and clean code. Currently at the farm.",
   links: {
     github:  "https://github.com/aruns-farm",
-    email:   "arun.vinland@gmail.com",
+    email:   "arun@ketils.farm",
   },
 
   nav: {
     links: [
       { label: "Home",    href: "/" },
-      { label: "Writing", href: "/blog" },
+      { label: "Writing", href: "https://notes.ketils.farm" },
       { label: "Watch",   href: "/watch" },
     ],
     cta: { label: "✉ Get in touch", href: "#contact" },
@@ -186,7 +186,7 @@ export const config: PortfolioConfig = {
       {
         heading: "Connect",
         links: [
-          { label: "Email",     href: "mailto:arun.vinland@gmail.com" },
+          { label: "Email",     href: "mailto:arun@ketils.farm" },
           { label: "GitHub",    href: "https://github.com/aruns-farm" },
           { label: "Writing",   href: "#writing" },
         ],

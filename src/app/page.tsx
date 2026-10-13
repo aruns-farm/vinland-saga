@@ -25,7 +25,7 @@ export default function Home() {
         <Ticker items={config.ticker} />
         <Projects projects={config.projects} />
         <WatchSection talks={config.talks} />
-        <Work entries={config.work} />
+        <Work entries={config.work} email={config.links.email} />
         <Skills panels={config.panels} />
         <Writing articles={config.writing} />
         <Contact config={config} />

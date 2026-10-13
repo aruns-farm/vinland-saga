@@ -1,0 +1,49 @@
+---
+import Cover from './Cover.astro';
+import { statusWord } from '../data/site';
+
+type Book = { id: string; title: string; author: string; shelf: 'SYS' | 'LNG' | 'IDE' | 'NXT'; status: 'reading' | 'finished' | 'abandoned' | 'wishlist'; call: string };
+interface Props { books: Book[]; label: string; href?: string; home?: boolean }
+const { books, label, href, home = false } = Astro.props;
+const dot = { reading: 'var(--seal)', finished: 'var(--ink)', abandoned: 'var(--faint)', wishlist: 'transparent' };
+---
+<div class:list={['shelf-wrap', { 'shelf-wrap--home': home }]}>
+  <div class="carousel" data-carousel>
+    <button class="round-btn" type="button" aria-label={`Scroll ${label} left`} data-dir="-1">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12 4 L6 10 L12 16" /></svg>
+    </button>
+    <div class="track" tabindex="0" aria-label={`${label} — scroll sideways`}>
+      <div class="track__row">
+        {books.map((b) => <Cover book={b} call={b.call} href={href} />)}
+      </div>
+      <div class="track__labels">
+        {books.map((b) => (
+          <div class="cover-label" data-status={b.status}>
+            <span class="status-dot" style={`background:${dot[b.status]};${b.status === 'wishlist' ? 'border:1px solid var(--ink)' : ''}`}></span>
+            {statusWord[b.status]}
+          </div>
+        ))}
+      </div>
+    </div>
+    <button class="round-btn" type="button" aria-label={`Scroll ${label} right`} data-dir="1">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4 L14 10 L8 16" /></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  function initCarousels() {
+    document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((c) => {
+      const track = c.querySelector<HTMLElement>('.track');
+      if (!track || c.dataset.ready) return;
+      c.dataset.ready = '1';
+      c.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const step = Math.max(200, track.clientWidth * 0.8) * Number(btn.dataset.dir);
+          track.scrollBy({ left: step, behavior: 'smooth' });
+        }),
+      );
+    });
+  }
+  document.addEventListener('astro:page-load', initCarousels);
+</script>

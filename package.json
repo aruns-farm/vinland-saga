@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build -o storybook-static"
+    "build-storybook": "storybook build -o storybook-static",
+    "notes:dev": "pnpm --filter arun-notes dev",
+    "notes:build": "pnpm --filter arun-notes build"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Astro site with its own toolchain (pnpm workspace package).
+    "notes/**",
   ]),
 ]);
 

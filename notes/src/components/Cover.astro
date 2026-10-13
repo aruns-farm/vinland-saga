@@ -1,0 +1,28 @@
+---
+import { shelves, statusWord } from '../data/site';
+
+interface Props {
+  book: { id: string; title: string; author: string; shelf: keyof typeof shelves; status: keyof typeof statusWord };
+  call: string;
+  href?: string;
+}
+const { book, call, href } = Astro.props;
+const { edge } = shelves[book.shelf];
+const Tag = href ? 'a' : 'div';
+---
+<Tag
+  href={href}
+  class:list={['cover', { 'cover--edge': edge }]}
+  data-shelf={book.shelf}
+  data-status={book.status}
+  aria-label={`${book.title} by ${book.author}, ${statusWord[book.status]}`}
+  role={href ? undefined : 'img'}
+>
+  <span class="cover__shelf">{shelves[book.shelf].label}</span>
+  <span class="cover__title">{book.title}</span>
+  <span class="cover__rule"></span>
+  <span class="cover__author">{book.author}</span>
+  <span class="cover__call">{call}</span>
+  {book.status === 'reading' && <span class="cover__ribbon" aria-hidden="true"></span>}
+  {book.status === 'abandoned' && <span class="cover__slip" aria-hidden="true"></span>}
+</Tag>
