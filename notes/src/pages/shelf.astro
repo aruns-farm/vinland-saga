@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import ShelfCarousel from '../components/ShelfCarousel.astro';
+import { shelves } from '../data/site';
+import { getBooks } from '../lib/util';
+
+const books = await getBooks();
+const codes = Object.keys(shelves) as (keyof typeof shelves)[];
+const filters = [
+  { key: '', label: 'all' },
+  { key: 'reading', label: 'reading' },
+  { key: 'finished', label: 'finished' },
+  { key: 'abandoned', label: 'abandoned' },
+  { key: 'wishlist', label: 'wishlist' },
+].map((f) => ({ ...f, n: f.key ? books.filter((b) => b.status === f.key).length : books.length }));
+---
+<Base title="The shelf" description="Everything I read, including what I quit.">
+  <section class="page-hero">
+    <div class="eyebrow">The shelf · {books.length} volumes · {codes.length} shelves</div>
+    <h1>Everything I read, including what I quit.</h1>
+  </section>
+
+  <div class="chip-bar" data-shelf-filters>
+    <div class="chips" role="group" aria-label="Filter by status">
+      {filters.map((f) => <button class="chip" type="button" aria-pressed={f.key === '' ? 'true' : 'false'} data-status={f.key}>{f.label} {f.n}</button>)}
+    </div>
+    <span class="mono muted" style="font-size:12px" data-count>{books.length} of {books.length} books</span>
+  </div>
+
+  {codes.map((code) => {
+    const list = books.filter((b) => b.shelf === code);
+    return (
+      <section class="shelf">
+        <div class="shelf__head"><h2>{code} — {shelves[code].label}</h2><span>{list.length} volumes</span></div>
+        <ShelfCarousel books={list} label={shelves[code].label} />
+      </section>
+    );
+  })}
+</Base>
+
+<script>
+  function initShelf() {
+    const bar = document.querySelector<HTMLElement>('[data-shelf-filters]');
+    if (!bar) return;
+    const chips = [...bar.querySelectorAll<HTMLButtonElement>('[data-status]')];
+    const count = bar.querySelector<HTMLElement>('[data-count]')!;
+    const covers = [...document.querySelectorAll<HTMLElement>('.cover')];
+    const labels = [...document.querySelectorAll<HTMLElement>('.cover-label')];
+    chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        const s = chip.dataset.status;
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        let shown = 0;
+        [...covers, ...labels].forEach((el) => {
+          const match = !s || el.dataset.status === s;
+          el.toggleAttribute('data-dim', !match);
+          if (match && el.classList.contains('cover')) shown++;
+        });
+        count.textContent = `${shown} of ${covers.length} books`;
+      }),
+    );
+  }
+  document.addEventListener('astro:page-load', initShelf);
+</script>

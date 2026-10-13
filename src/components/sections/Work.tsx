@@ -52,7 +52,7 @@ function WorkCard({ entry, big }: { entry: WorkEntry; big?: boolean }) {
   )
 }
 
-export function Work({ entries }: { entries: WorkEntry[] }) {
+export function Work({ entries, email }: { entries: WorkEntry[]; email?: string }) {
   const [featured, ...rest] = entries
 
   return (
@@ -72,12 +72,14 @@ export function Work({ entries }: { entries: WorkEntry[] }) {
               <em style={{ fontStyle: "italic", color: "var(--barn)" }}>Experience</em>
             </h2>
           </div>
-          <a
-            href="mailto:arun.vinland@gmail.com"
-            className="font-black text-ink underline decoration-wavy decoration-barn underline-offset-[5px]"
-          >
-            Full résumé →
-          </a>
+          {email && (
+            <a
+              href={`mailto:${email}`}
+              className="font-black text-ink underline decoration-wavy decoration-barn underline-offset-[5px]"
+            >
+              Full résumé →
+            </a>
+          )}
         </div>
 
         {/* Primary layout: big + smaller cards */}

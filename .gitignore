@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 storybook-static
 memory
+# OpenNext / Wrangler
+.open-next
+.wrangler
+.dev.vars*

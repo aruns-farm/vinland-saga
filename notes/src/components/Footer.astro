@@ -1,0 +1,8 @@
+---
+interface Props { left?: string }
+const { left = 'Set in Source Serif 4 & JetBrains Mono. No trackers.' } = Astro.props;
+---
+<footer class="site-footer">
+  <span><slot>{left}</slot></span>
+  <span><a href="/rss.xml">RSS</a> · <a class="ext" href="https://arun.ketils.farm">arun.ketils.farm</a></span>
+</footer>

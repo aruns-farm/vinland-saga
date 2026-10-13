@@ -1,0 +1,5 @@
+---
+interface Props { size?: 'sm' | 'md' | 'end'; text?: string }
+const { size = 'sm', text = size === 'end' ? '読了' : 'アルン' } = Astro.props;
+---
+<span class={`seal seal--${size}`} aria-hidden="true">{text}</span>

@@ -1,0 +1,86 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Seal from '../../components/Seal.astro';
+import { getPapers, fmtDate } from '../../lib/util';
+import { marked } from '../../lib/inline';
+
+export async function getStaticPaths() {
+  const papers = await getPapers();
+  return papers.filter((p) => p.hasNotes).map((entry) => ({ params: { slug: entry.id }, props: { entry, all: papers } }));
+}
+
+const { entry, all } = Astro.props;
+const d = entry.data;
+const { Content, headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2);
+const next = d.next.map((id) => all.find((p) => p.id === id)).filter(Boolean);
+---
+<Base title={d.title} description={d.idea} footer="← All papers">
+  <section class="essay-hero">
+    <a class="eyebrow accent" href="/papers/">← Papers · annotated notes</a>
+    <h1>{d.title}</h1>
+    {d.citation && (
+      <div class="cite box">
+        <span class="eyebrow" style="font-size:11px">Citation</span>
+        <span set:html={marked(d.citation)} />
+      </div>
+    )}
+    <div class="meta" style="border-top:0;padding-top:0">
+      {d.read && <span>Read {fmtDate(d.read)}</span>}
+      <span>{d.topic}</span>
+      {d.minutes && <span>~{d.minutes} min</span>}
+    </div>
+  </section>
+
+  {toc.length > 0 && (
+    <details class="toc-mobile box">
+      <summary><span>Contents · {toc.length} sections</span><span aria-hidden="true">+</span></summary>
+      <nav aria-label="Contents">{toc.map((h, i) => <a href={`#${h.slug}`}>{i + 1}  {h.text}</a>)}</nav>
+    </details>
+  )}
+
+  <div class="cols" style="padding-bottom: 40px">
+    <article class="main prose">
+      {d.summary && (
+        <section class="summary">
+          <span class="eyebrow accent" style="font-size:11px">The paper in one paragraph</span>
+          <p set:html={marked(d.summary)} />
+        </section>
+      )}
+      <Content />
+      {d.takeaway && (
+        <section style="margin-top:48px;padding-top:24px;border-top:1px solid var(--ink);display:flex;flex-direction:column;gap:12px">
+          <h2 style="margin:0;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;counter-increment:none" class="no-num">What I took from it</h2>
+          <p>{d.takeaway}</p>
+          {d.essay && <a class="link" href={`/writing/${d.essay}/`} style="text-decoration:none">Essay that builds on this →</a>}
+        </section>
+      )}
+      <div class="end-mark">
+        <Seal size="end" />
+        <span class="mono muted" style="font-size:12px">end of notes</span>
+      </div>
+    </article>
+
+    <aside class="side essay-side">
+      {toc.length > 0 && (
+        <nav class="toc m-hide" aria-label="Contents">
+          <span class="h">Contents</span>
+          {toc.map((h, i) => <a href={`#${h.slug}`}>{i + 1}  {h.text}</a>)}
+        </nav>
+      )}
+      {d.terms.length > 0 && (
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span class="h">Terms</span>
+          {d.terms.map((t) => <div><span class="mono accent" style="font-size:12px">{t.term}</span><br />{t.meaning}</div>)}
+        </div>
+      )}
+      {next.length > 0 && (
+        <div class="toc">
+          <span class="h">Read next</span>
+          {next.map((p) => <a href={p!.hasNotes ? `/papers/${p!.id}/` : '/papers/'}>{p!.data.title.split(':')[0]} ({p!.data.year}) →</a>)}
+        </div>
+      )}
+    </aside>
+  </div>
+</Base>

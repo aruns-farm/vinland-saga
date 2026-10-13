@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source not "../../notes";
 
 /* ── Design tokens from the Woolly & Co. design system ── */
 @theme {

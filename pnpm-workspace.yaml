@@ -1,0 +1,4 @@
+# The portfolio (Next.js) stays at the root, where Cloudflare's build runs.
+# Each workspace package builds and deploys on its own.
+packages:
+  - notes

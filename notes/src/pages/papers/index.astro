@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPapers } from '../../lib/util';
+
+const papers = await getPapers();
+const topics = [...new Set(papers.map((p) => p.data.topic))];
+---
+<Base title="Papers" description="The primary sources behind the essays.">
+  <section class="page-hero">
+    <div class="eyebrow">Papers &amp; articles · {papers.length} read</div>
+    <h1>The primary sources behind the essays.</h1>
+    <p>Each entry says what the paper is about in one line. The ones marked <span class="mono accent" style="font-size:0.8em">notes →</span> have my full annotations.</p>
+  </section>
+
+  <div class="chip-bar" data-paper-filters>
+    <div class="chips" role="group" aria-label="Filter by topic">
+      <button class="chip" type="button" aria-pressed="true" data-topic="">all</button>
+      {topics.map((t) => <button class="chip" type="button" aria-pressed="false" data-topic={t}>{t.toLowerCase()}</button>)}
+    </div>
+    <span class="mono muted" style="font-size:12px" data-count>{papers.length} of {papers.length} · newest first</span>
+  </div>
+
+  <div>
+    {papers.map((p) => (
+      <article class="paper" data-paper data-topic={p.data.topic}>
+        <div class="paper__yr"><span>{p.data.year}</span><span>{p.data.venue}</span></div>
+        <div class="paper__body">
+          <h2>{p.hasNotes ? <a href={`/papers/${p.id}/`}>{p.data.title}</a> : p.data.title}</h2>
+          <span class="mono muted" style="font-size:12px">{p.data.authors}</span>
+          <p>{p.data.idea}</p>
+          <div class="meta" style="margin-top:4px">
+            <span>{p.data.topic}</span>
+            {p.hasNotes && <a class="accent" href={`/papers/${p.id}/`}>notes →</a>}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</Base>
+
+<script>
+  function initPapers() {
+    const bar = document.querySelector<HTMLElement>('[data-paper-filters]');
+    if (!bar) return;
+    const chips = [...bar.querySelectorAll<HTMLButtonElement>('[data-topic]')];
+    const count = bar.querySelector<HTMLElement>('[data-count]')!;
+    const items = [...document.querySelectorAll<HTMLElement>('[data-paper]')];
+    chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        const t = chip.dataset.topic;
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        items.forEach((it) => { it.hidden = Boolean(t) && it.dataset.topic !== t; });
+        count.textContent = `${items.filter((i) => !i.hidden).length} of ${items.length} · newest first`;
+      }),
+    );
+  }
+  document.addEventListener('astro:page-load', initPapers);
+</script>

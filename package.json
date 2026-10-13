@@ -8,9 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build -o storybook-static"
+    "build-storybook": "storybook build -o storybook-static",
+    "notes:dev": "pnpm --filter arun-notes dev",
+    "notes:build": "pnpm --filter arun-notes build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "next": "16.2.5",
@@ -29,7 +34,8 @@
     "storybook": "^10.3.6",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "webpack": "^5.106.2"
+    "webpack": "^5.106.2",
+    "wrangler": "^4.150.0"
   },
   "packageManager": "pnpm@10.33.0"
 }

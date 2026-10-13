@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getEssays, fmtDate, mediaLabel } from '../../lib/util';
+
+const essays = await getEssays();
+const subjects = [...new Set(essays.map((e) => e.data.subject))];
+const groups = subjects.map((s) => ({ name: s, items: essays.filter((e) => e.data.subject === s) }));
+---
+<Base title="All writing" description="Every essay, grouped by subject.">
+  <section class="page-hero">
+    <div class="eyebrow">All writing · {essays.length} essays</div>
+    <h1>The index.</h1>
+  </section>
+
+  <div class="search" data-index-filters>
+    <label for="q" class="eyebrow" style="font-size:11px">Search titles</label>
+    <input id="q" type="search" placeholder="e.g. postgres, rust, retrieval" autocomplete="off" data-q />
+    <div class="chips" role="group" aria-label="Filter by subject">
+      <button class="chip" type="button" aria-pressed="true" data-subject="">all</button>
+      {subjects.map((s) => <button class="chip" type="button" aria-pressed="false" data-subject={s}>{s.toLowerCase()}</button>)}
+    </div>
+  </div>
+
+  <div data-index>
+    {groups.map((g) => (
+      <section class="group" data-group={g.name}>
+        <div class="sec-head"><h2 style="font-size:12px;letter-spacing:0.1em">§ {g.name}</h2><span>{g.items.length} {g.items.length === 1 ? 'essay' : 'essays'}</span></div>
+        {g.items.map((e) => (
+          <a class="index-row" href={`/writing/${e.id}/`} data-row data-subject={e.data.subject} data-text={`${e.data.title} ${e.data.subject} ${e.data.tags.join(' ')}`.toLowerCase()}>
+            <span class="index-row__no">{e.data.number}</span>
+            <span class="index-row__title">{e.data.title}</span>
+            <span class="meta"><span>{e.data.minutes} min</span>{mediaLabel[e.data.media] && <span class="accent">{mediaLabel[e.data.media]}</span>}<span>{fmtDate(e.data.date)}</span></span>
+          </a>
+        ))}
+      </section>
+    ))}
+    <p class="muted" style="padding:48px 0;font-size:19px" data-empty hidden>Nothing matches that yet. That might be the next essay.</p>
+  </div>
+</Base>
+
+<script>
+  function initIndex() {
+    const root = document.querySelector<HTMLElement>('[data-index-filters]');
+    if (!root) return;
+    const q = root.querySelector<HTMLInputElement>('[data-q]')!;
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('[data-subject]')];
+    const rows = [...document.querySelectorAll<HTMLElement>('[data-row]')];
+    const groups = [...document.querySelectorAll<HTMLElement>('[data-group]')];
+    const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+    let subject = new URLSearchParams(location.search).get('subject') ?? '';
+
+    const apply = () => {
+      const term = q.value.trim().toLowerCase();
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.subject === subject)));
+      rows.forEach((r) => {
+        r.hidden = !((!subject || r.dataset.subject === subject) && (!term || r.dataset.text!.includes(term)));
+      });
+      groups.forEach((g) => { g.hidden = !g.querySelector('[data-row]:not([hidden])'); });
+      empty.hidden = rows.some((r) => !r.hidden);
+    };
+    chips.forEach((c) => c.addEventListener('click', () => { subject = c.dataset.subject ?? ''; apply(); }));
+    q.addEventListener('input', apply);
+    apply();
+  }
+  document.addEventListener('astro:page-load', initIndex);
+</script>

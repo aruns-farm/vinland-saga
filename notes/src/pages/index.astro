@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import ShelfCarousel from '../components/ShelfCarousel.astro';
+import { site, now, offClock } from '../data/site';
+import { getEssays, getPapers, getBooks, fmtDate, mediaLabel } from '../lib/util';
+
+const essays = await getEssays();
+const [feat, ...rest] = essays;
+const papers = (await getPapers()).sort((a, b) => Number(b.hasNotes) - Number(a.hasNotes)).slice(0, 4);
+const books = await getBooks();
+const homeBooks = books.filter((b) => b.onHome);
+const reading = books.find((b) => b.status === 'reading');
+const subjects = [...new Set(essays.map((e) => e.data.subject))];
+const featVideo = feat?.data.media === 'video' ? feat.data.video : undefined;
+---
+<Base>
+  <section class="hero">
+    <div class="eyebrow">{site.eyebrow}</div>
+    <h1>{site.headline}</h1>
+    <p>{site.description}</p>
+    <div class="role m-hide">{site.role.map((r) => <span>{r}</span>)}</div>
+    <div class="now-line">
+      <span class="now-tag"><span class="dot"></span>Now</span>
+      <span>{now.line}</span>
+      <span class="mono" style="font-size:11px;color:var(--faint)">updated {fmtDate(new Date(now.updated))}</span>
+    </div>
+  </section>
+
+  {feat && (
+    <section class="feature" aria-label="Latest essay">
+      <div class="feature__text">
+        <span class="eyebrow accent">Latest · Essay № {feat.data.number}</span>
+        <a href={`/writing/${feat.id}/`}><h2>{feat.data.title}</h2></a>
+        <p>{feat.data.dek}</p>
+        <div class="meta">
+          <span>{fmtDate(feat.data.date)}</span><span>{feat.data.minutes} min</span><span>{feat.data.tags.join(' · ')}</span>
+          {mediaLabel[feat.data.media] && <span class="accent">{mediaLabel[feat.data.media]}</span>}
+        </div>
+        <a class="cta" href={`/writing/${feat.id}/`}>Read the essay →</a>
+      </div>
+      {featVideo ? (
+        <a class="feature__media" href={`/writing/${feat.id}/#video`} aria-label="Watch the companion video">
+          <span class="eyebrow" style="color:var(--on-screen-muted);font-size:11px">Companion video · {featVideo.duration}</span>
+          <span class="play"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 L20 12 L7 20 Z" fill="currentColor" /></svg></span>
+          <span class="mono" style="font-size:11px;color:var(--on-screen-faint)">{featVideo.chapters.length} chapters, synced with the text</span>
+        </a>
+      ) : (
+        <a class="feature__media feature__media--paper" href={`/writing/${feat.id}/`}>
+          <span class="eyebrow">Essay № {feat.data.number}</span>
+          <span style="font-size:22px;line-height:1.3">{feat.data.subject}</span>
+          <span class="mono" style="font-size:11px;color:var(--muted)">{feat.data.minutes} min read</span>
+        </a>
+      )}
+    </section>
+  )}
+
+  <div class="cols" style="padding: 64px 0">
+    <section class="main">
+      <div class="sec-head"><h2>§ Earlier essays</h2><span>newest first</span></div>
+      {rest.map((e, i) => (
+        <a href={`/writing/${e.id}/`} class:list={['essay-row', { 'm-hide': i >= 3 }]}>
+          <span class="essay-row__no">{e.data.number}</span>
+          <div>
+            <h3>{e.data.title}</h3>
+            <p>{e.data.dek}</p>
+            <div class="meta">
+              <span>{fmtDate(e.data.date)}</span><span>{e.data.minutes} min</span><span>{e.data.tags.join(' · ')}</span>
+              {mediaLabel[e.data.media] && <span class="accent">{mediaLabel[e.data.media]}</span>}
+            </div>
+          </div>
+        </a>
+      ))}
+      <a class="link" href="/writing/" style="display:inline-block;margin-top:28px">Full index of essays →</a>
+    </section>
+
+    <aside class="side">
+      {reading && (
+        <section class="side-block m-hide">
+          <h2>On the desk</h2>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:21px;line-height:1.3;font-style:italic">{reading.title}</span>
+            <span class="mono muted" style="font-size:12px">{reading.author}{reading.progress && ` · ${reading.progress}`}</span>
+          </div>
+          <a class="link" href="/shelf/">The shelf →</a>
+        </section>
+      )}
+      <section class="side-block m-hide">
+        <h2>Subjects</h2>
+        <div class="tags">{subjects.map((s) => <a href={`/writing/?subject=${encodeURIComponent(s)}`}>{s.toLowerCase()}</a>)}</div>
+      </section>
+      <section class="side-block" id="subscribe">
+        <h2>Subscribe</h2>
+        <label for="sub-email" style="font-size:16px;color:var(--ink-2)">One email per essay. Nothing else.</label>
+        <form class="subscribe" action={site.subscribeAction || undefined} method="post">
+          <input id="sub-email" name="email" type="email" required placeholder="you@domain.com" autocomplete="email" />
+          <button class="btn-solid" type="submit">join</button>
+        </form>
+      </section>
+    </aside>
+  </div>
+
+  <section id="shelf" style="padding-bottom: 72px">
+    <div class="sec-head"><h2>§ The shelf</h2><a href="/shelf/">Full library →</a></div>
+    <ShelfCarousel books={homeBooks} label="The shelf" href="/shelf/" home />
+  </section>
+
+  <div class="cols" style="padding-bottom: 24px">
+    <section class="main">
+      <div class="sec-head"><h2>§ Papers &amp; articles I read</h2><a href="/papers/">All papers →</a></div>
+      {papers.map((p, i) => (
+        <a href={p.hasNotes ? `/papers/${p.id}/` : '/papers/'} class:list={['paper-row', { 'm-hide': i >= 2 }]}>
+          <span class="paper-row__venue">{p.data.venue} · {p.data.year}</span>
+          <div class="paper-row__body">
+            <span class="paper-row__title">{p.data.title}</span>
+            <span class="mono muted" style="font-size:12px">{p.data.authors}{p.hasNotes && <> · <span class="accent">my notes →</span></>}</span>
+          </div>
+        </a>
+      ))}
+    </section>
+    <aside class="side m-hide">
+      <div class="sec-head"><h2>Off the clock</h2></div>
+      {offClock.map((o) => <div class="kv"><span class="kv__k">{o.k}</span><span class="kv__v" style="font-size:16px">{o.v}</span></div>)}
+      <a class="link" href="/about/" style="display:inline-block;margin-top:20px">More about me →</a>
+    </aside>
+  </div>
+</Base>
